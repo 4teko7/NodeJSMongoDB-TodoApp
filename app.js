@@ -33,6 +33,6 @@ app.post("/success",function(req,res){
 });
 
 
-app.listen(8000,function(){
-    console.log("port 8000 is opened.");
+app.listen(process.env.PORT || 8000,function(){
+    console.log("app started");
 });
