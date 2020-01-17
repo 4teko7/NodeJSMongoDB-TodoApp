@@ -26,6 +26,7 @@ app.post("/success",function(req,res){
     if(firstName == "bilal" && pass == "123"){
         res.redirect("/success");
     }else{
+        // res.write("There is an error");
         res.redirect("/failure");
     }
     
