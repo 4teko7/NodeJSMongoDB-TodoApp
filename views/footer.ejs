@@ -15,7 +15,7 @@
 
     <!--Grid row-->
     <div class="row">
-      <%if(todos.length === 0){%>
+  
       <!--Grid column-->
       <div class="col-lg-2 col-md-12 mb-4">
 
@@ -104,22 +104,7 @@
         </div>
 
       </div>
-      <%}else{%>
-        <% for(let i = 0; i < todos.length; i++) {%>
-          <!--Grid column-->
-          <div class="col-lg-2 col-md-12 mb-4">
-    
-            <!--Image-->
-            <div class="view overlay z-depth-1-half">
-              <p><%=todos[i]%></p>
-              <a href="">
-                <div class="mask rgba-white-light"></div>
-              </a>
-            </div>
-    
-          </div>
-          <% }%>
-          <%}%>
+     
 
       <!--Grid column-->
 
