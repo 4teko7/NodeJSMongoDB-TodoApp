@@ -24,8 +24,17 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="todolist not-done">
-                    <h1>Todos<scan style="right:3%; position: absolute;"><%=date%></scan>
-                    </h1>
+                    <div class="row">
+                        <div class = "container" style = " text-align: center;">
+                            <div class="col-md-9" style= "display: inline;">
+                            <h1 style = "display: inline;">Todos</h1>
+                        </div>
+                            <div class="col-md-3" style= "display: inline;">
+                            <scan style="right:3%;  font-size: 2rem;"><%=date%></scan>
+                        </div>
+                        </div>
+               
+                </div>
                     <form action="/addTodo" method="post">
                         <input type="text" name="todo" class="form-control add-todo" placeholder="Add todo"
                             style="height: 50px; margin-bottom: 10px;" required>
@@ -189,7 +198,7 @@
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 
     <!-- <script type="text/javascript" src="js/todos.js"></script> -->
-    </bodystyle= "height:100%; position: absolute;">
+    </body style= "height:100%; position: absolute;">
 
 
 </html>
