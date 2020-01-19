@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="css/todos.css" rel="stylesheet" id="bootstrap-css">
+
+    <!--Made with love by Mutiullah Samim -->
+
+
+    <!--Custom styles-->
+    <div style="text-align: center; margin-top: 10px;">
+        <a  href="/"><button class="btn btn-primary">Go to Main Page</button></a>
+    </div>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="todolist not-done">
+                    <h1>Todos</h1>
+                    <form action="/addTodo" method="post">
+                        <input type="text" name="todo" class="form-control add-todo" placeholder="Add todo">
+                        <button id="addTodo" type="submit" name="nameAddTodo" class="form-control btn btn-primary">Add
+                            Todo</button>
+                    </form>
+                    <hr>
+                    <ul id="sortable" class="list-unstyled">
+
+                        <% for(let i = 0; i < todos.length; i++){ %>
+                        <li class="ui-state-default">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="" /><%=todos[i]%></label>
+                            </div>
+                        </li>
+                        <%}%>
+                </ul>
+                <form action="/markAllDone" method = "post">
+                <button id="checkAll" style="margin-bottom: 10px;" class="btn btn-success">Mark all as done</button>
+            </form>
+                <div class="todo-footer">
+                    <strong><span class="count-todos"></span></strong> <%=todos.length%> Items Left
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="todolist">
+                <h1>Already Done <form style="display: inline;" action="/removeAll" method="post"><button type="submit"
+                            class="btn btn-danger pull-right">Remove All</button></form>
+                </h1>
+
+                <%for(let i = 0; i < allDone.length; i++){%>
+                <form action="/deleteTodo" method="post">
+
+                    <ul id="done-items" class="list-unstyled">
+
+                        <li style="display: inline;" name="todolst"><input name="todolst" type="hidden"
+                                value=<%=allDone[i]%>><%=allDone[i]%></li>
+                        <button type="submit" class="remove-item btn btn-danger btn-xs pull-right">X</button>
+                    </ul>
+                </form>
+
+                <%}%>
+            <div class="todo-footer">
+                <strong><span class="count-todos"></span></strong> <%=allDone.length%> Items Completed
+            </div>
+        </div>
+
+    </div>
+    </div>
+    </div>
+
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+
+    <!-- <script type="text/javascript" src="js/todos.js"></script> -->
+</body>
+
+
+</html>
