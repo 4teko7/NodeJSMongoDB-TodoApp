@@ -88,14 +88,14 @@
                             <hr style = "width:20%; background-color: rebeccapurple;">
                             <div class="row" style = "margin-right:0.5rem;">
                                     <label name = "todolst" style = "word-wrap: break-word;">
-                                        <%if(todos[i].note.length > 100){%> <strong style = "margin-left:1rem;">Note : </strong style = "margin-left:1rem;">
+                                        <%if(todos[i].note.length > 100){%> <strong style = "margin-left:1rem;">Note : </strong>
                             <%=todos[i].note.slice(0,100)%>
                             <form action="/todoDetail" method="post">
                                 <input style="display: inline;" name="todo" value=<%=i%> type="hidden"></input>
                                 <button style="display: inline;" type="submit" class="btn btn-default">...Read
                                     More</button>
                             </form>
-                            <%}else{%> <strong>Note : </strong>
+                            <%}else{%> <strong style = "margin-left:1rem;">Note : </strong style = "margin-left:1rem;">
                             <%=todos[i].note%>
                             <%}%>
                                     </label>
@@ -184,7 +184,7 @@
                             
                             
                             <div class="row" style = "margin-right:0.5rem;">
-                                    <label name = "todolst" style = "word-wrap: break-word; margin-left:1rem;">
+                                    <label name = "todolst" style = "word-wrap: break-word;">
                                         <%if(allDone[i].note.length > 100){%> <strong style = "margin-left:1rem;">Note : </strong>
                         <%=allDone[i].note.slice(0,100)%>
                         <form action="/todoDetail" method="post">
@@ -192,7 +192,7 @@
                             <button style="display: inline;" type="submit" class="btn btn-default">...Read
                                 More</button>
                         </form>
-                        <%}else{%> <strong>Note : </strong>
+                        <%}else{%> <strong style = "margin-left:1rem;">Note : </strong style = "margin-left:1rem;">
                         <%=allDone[i].note%>
                         <%}%>
                                     </label>
