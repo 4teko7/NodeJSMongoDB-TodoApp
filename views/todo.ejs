@@ -47,6 +47,13 @@
 
 
 
+<<<<<<< HEAD
+=======
+                            <label style = "margin-left:0.3rem; font-size: 1.3rem;">Dates</label">
+                            <hr>
+                        </div>
+                        <div name="todo" class="col-lg-4 col-md-4 col-xs-4">
+>>>>>>> 432971b8d1d2d9fe894ef07eadfd1fb9fdb0d249
 
 
                     <% for(let i = 0; i < todos.length; i++){ %>
@@ -141,6 +148,7 @@
 
 
 
+<<<<<<< HEAD
                     <% for(let i = 0; i < allDone.length; i++){ %>
 
                     <div class="row">
@@ -163,6 +171,19 @@
                                     style="width:15%; height:15%;" src="img/infinity.png" alt="---"></label
                                 style="margin-left:1rem;">
                             <%}%>
+=======
+                        <div class="row">
+                            <ul id="sortable" class="list-unstyled">
+                                <div name="date" class="todoss col-lg-2 col-md-2 col-xs-2">
+                                    <% if (todos[i]["date"] !== ""){%>
+                                   
+                                            <label style="margin-left:1rem;"><%=todos[i]["date"]%></label></label>
+                                    <%}else{%>
+                                    <label><img
+                                            style="margin-left:2rem;width:40%; height:40%;" src="img/infinity.png"
+                                            alt="---"></label>
+                                    <%}%>
+>>>>>>> 432971b8d1d2d9fe894ef07eadfd1fb9fdb0d249
                                   
                                 </div>
                                 <hr style = "width:20%; background-color: rebeccapurple;">
