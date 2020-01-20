@@ -2,17 +2,18 @@
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <link href="css/todos.css" rel="stylesheet" id="bootstrap-css">
 
-<div style="text-align: center; margin-top: 30px;">
-    <a href="/"><button class="btn btn-primary">Go to Main Page</button></a>
-</div>
 
-<div class="container" style = "margin:1rem 1rem 1rem 1rem;border-style:double">
-    <div class="container" style = "margin-top: 10%; margin-bottom: 10%;">
+
+<div class="container" style = "border-style:double; align-content: center;">
+    <div style="text-align: center; margin-top: 2rem;" class = "pull-right">
+        <a href="/"><button class="btn btn-primary">Go to Main Page</button></a>
+    </div>
+    <div class="container" style = "margin-top: 2rem; margin-bottom: 10%; align-content: center">
 
         <div class="row">
             
-                <label style = "margin-left: 30%;">Dates</label>
-                <hr style = "height: 5px;background-color: red;">
+                <label style = "margin-left: 30%; font-weight: bold;">Dates</label>
+                <hr style = "height: 5px;background-color: red; margin-right:2rem">
 
         </div>
         <div  style = "text-align: center;">
@@ -27,20 +28,20 @@
         </div>
             <br>
             <div class="row">
-                <hr>
+                <hr style = "margin-right:2rem">
                 <br><br>
-                    <label style = "margin-left: 30%;">Todos</label style = "margin-left: 30%;">
-                    <hr style = "height: 5px;background-color: red;">
+                    <label style = "margin-left: 30%;font-weight: bold;">Todos</label style = "margin-left: 30%;">
+                    <hr style = "height: 5px;background-color: red;margin-right:2rem">
 
             </div>
             
 
             <label style = "word-wrap: break-word;"><%=todos[i].todo%></label>
-            <hr>
+            <hr style = "margin-right:2rem">
             <br><br>
             <div class="row">
-                    <label style = "margin-left: 30%;">Notes</label style = "margin-left: 30%;">
-                    <hr style = "height: 5px;background-color: red;">
+                    <label style = "margin-left: 30%;font-weight: bold;">Notes</label style = "margin-left: 30%;">
+                    <hr style = "height: 5px;background-color: red; margin-right:2rem">
 
             </div>
 
