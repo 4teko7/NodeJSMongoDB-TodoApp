@@ -18,20 +18,6 @@ app.set("view engine", "ejs");
 //    @@@@@@@@@@ GET METHODS  @@@@@@@@@@@@@@@
 
 app.get("/", function (req, res) {
-    res.render("index", { todos: todos });
-});
-
-app.get("/signup", function (req, res) {
-    res.render("signup", { todos: todos });
-});
-
-app.get("/success", function (req, res) {
-    res.render("success", { todos: todos });
-});
-app.get("/failure", function (req, res) {
-    res.render("failure", { todos: todos });
-});
-app.get("/todo", function (req, res) {
     res.render("todo", {
         todos: todos,
         allDone: allDone,
@@ -42,18 +28,6 @@ app.get("/todo", function (req, res) {
 
 //    @@@@@@@@@@ POST METHODS  @@@@@@@@@@@@@@@
 
-app.post("/success", function (req, res) {
-
-    var firstName = req.body.username;
-    var pass = req.body.pass;
-    if (firstName == "bilal" && pass == "123") {
-        res.redirect("/success");
-    } else {
-        // res.write("There is an error");
-        res.redirect("/failure");
-    }
-
-});
 
 
 app.post("/addTodo", function (req, res) {
@@ -61,27 +35,26 @@ app.post("/addTodo", function (req, res) {
         res.redirect("/todo");
     } else {
         todos.push({ "date": req.body.date, "todo": req.body.todo, "note": req.body.note });
-        res.redirect("/todo");
+        res.redirect("/");
     }
 });
 
 app.post("/markAllDone", function (req, res) {
     for (let i = 0; i < todos.length; i++) {
-        allDone.push(todos[i].todo);
+        allDone.push(todos[i]);
     }
     todos.length = 0;
-    res.redirect("/todo");
+    res.redirect("/");
 });
 
 app.post("/deleteTodo", function (req, res) {
-
-    allDone = allDone.filter(item => item !== req.body.todolst);
-    res.redirect("/todo");
+    allDone = allDone.filter(item => item !== allDone[req.body.todo]);
+    res.redirect("/");
 });
 
 app.post("/removeAll", function (req, res) {
     allDone.length = 0;
-    res.redirect("/todo");
+    res.redirect("/");
 });
 
 app.post("/todoDetail",function(req,res){
@@ -94,9 +67,9 @@ app.post("/todoDetail",function(req,res){
 
 app.post("/completeTodo",function(req,res){
 
-    allDone.push(todos[req.body.todo].todo)
+    allDone.push(todos[req.body.todo])
     todos = todos.filter(item => item !== todos[req.body.todo]);
-    res.redirect("/todo");
+    res.redirect("/");
 });
 app.listen(process.env.PORT || 8000, function () {
     console.log("app started");

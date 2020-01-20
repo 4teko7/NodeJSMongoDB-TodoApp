@@ -3,43 +3,45 @@
 <link href="css/todos.css" rel="stylesheet" id="bootstrap-css">
 
 <div style="text-align: center; margin-top: 30px;">
-    <a href="/todo"><button class="btn btn-primary">Go to Main Page</button></a>
+    <a href="/"><button class="btn btn-primary">Go to Main Page</button></a>
 </div>
 
-<div class="container">
+<div class="container" style = "margin:1rem 1rem 1rem 1rem;border-style:double">
     <div class="container" style = "margin-top: 10%; margin-bottom: 10%;">
+
         <div class="row">
             
-            <div name="date" class="col-md-2 col-xs-2">
                 <label style = "margin-left: 30%;">Dates</label>
-                <hr>
-            </div>
-        </div>
+                <hr style = "height: 5px;background-color: red;">
 
+        </div>
+        <div  style = "text-align: center;">
         <% if (todos[i]["date"] !== ""){%>
-            <label><input  type = "hidden" value="" /><label style="margin-left:3rem;"><%=todos[i]["date"]%></label></label>
+            <label><input  type = "hidden"><%=todos[i]["date"]%></label>
             <%}else{%>
-            <label><input type = "hidden" value="" /><img style="margin-left:3rem;width:25%; height:25%;" src="img/infinity.png"
+                
+            <label><input type = "hidden"><img style="width:10%; height:10%;" src="img/infinity.png"
                     alt="---"></label>
+                
             <%}%>
+        </div>
             <br>
             <div class="row">
-                <hr style = "background-color: red;"><br><br><br><br>
-                <div name="date" class="col-md-5 col-xs-5">
+                <hr>
+                <br><br>
                     <label style = "margin-left: 30%;">Todos</label style = "margin-left: 30%;">
-                    <hr>
-                </div>
+                    <hr style = "height: 5px;background-color: red;">
+
             </div>
             
 
             <label style = "word-wrap: break-word;"><%=todos[i].todo%></label>
-
+            <hr>
+            <br><br>
             <div class="row">
-                <hr style = "background-color: red;"><br><br><br><br>
-                <div name="date" class="col-md-5 col-xs-5">
                     <label style = "margin-left: 30%;">Notes</label style = "margin-left: 30%;">
-                    <hr>
-                </div>
+                    <hr style = "height: 5px;background-color: red;">
+
             </div>
 
             <label style = "word-wrap: break-word;"><%=todos[i].note%></label>

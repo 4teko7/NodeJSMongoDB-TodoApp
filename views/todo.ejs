@@ -13,9 +13,7 @@
 
 
     <!--Custom styles-->
-    <div style="text-align: center; margin-top: 10px;">
-        <a href="/"><button class="btn btn-primary">Go to Main Page</button></a>
-    </div>
+
 </head>
 
 <body>
@@ -25,16 +23,16 @@
             <div class="col-md-12">
                 <div class="todolist not-done">
                     <div class="row">
-                        <div class = "container" style = " text-align: center;">
-                            <div class="col-md-9" style= "display: inline;">
-                            <h1 style = "display: inline;">Todos</h1>
+                        <div class="container" style=" text-align: center;">
+                            <div class="col-md-9" style="display: inline;">
+                                <h1 style="display: inline;">Todos</h1>
+                            </div>
+                            <div class="col-md-3 pull-right" style="display: inline;">
+                                <scan style="  font-size: 1.5rem; font-weight: bold;"><%=date%></scan>
+                            </div>
                         </div>
-                            <div class="col-md-3" style= "display: inline;">
-                            <scan style="right:3%;  font-size: 2rem;"><%=date%></scan>
-                        </div>
-                        </div>
-               
-                </div>
+
+                    </div>
                     <form action="/addTodo" method="post">
                         <input type="text" name="todo" class="form-control add-todo" placeholder="Add todo"
                             style="height: 50px; margin-bottom: 10px;" required>
@@ -46,148 +44,176 @@
                             Todo</button>
                     </form>
                     <hr>
+
+
+
+
+
+                    <% for(let i = 0; i < todos.length; i++){ %>
+
                     <div class="row">
+                        <ul id="sortable" class="list-unstyled">
+                            <form action="/completeTodo" method="post">
 
-                        <div name="date" class="col-lg-2 col-md-2 col-xs-2">
+                                <ul id="done-items" class="list-unstyled">
 
+                                    <li style="display: inline;" name="todo"><input name="todo" type="hidden"
+                                            value=<%=i%>></li>
+                                    <button type="submit" class="remove-item btn btn-info btn-xs pull-right"><img
+                                            src="img/tic.png" style="height:15px; width:15px; font-weight: 400;"
+                                            alt="Completed"></button>
+                                </ul>
+                            </form>
+                            <% if (todos[i]["date"] !== ""){%>
 
-                            <label style = "margin-left:0.3rem; font-size: 1.3rem;">Dates</label>
-                            <hr>
-                        </div>
-                        <div name="todo" class="col-lg-4 col-md-4 col-xs-4">
-
-                            <label style = "margin-left:2rem;">Todos</label>
-                            <hr>
-                        </div>
-
-                        <div name="note" class="col-lg-4 col-md-4 col-xs-4">
-
-                            <label style = "margin-left:2rem;">Notes</label style = "margin-left:1rem;">
-                            <hr>
-                        </div>
-
-                    </div>
-
-
-                    <div>
-
-
-
-
-                        <% for(let i = 0; i < todos.length; i++){ %>
-
-                        <div class="row">
-                            <ul id="sortable" class="list-unstyled">
-                                <div name="date" class="todoss col-lg-2 col-md-2 col-xs-2">
-                                    <% if (todos[i]["date"] !== ""){%>
-                                   
-                                            <label style="margin-left:1rem;"><%=todos[i]["date"]%></label></label>
-                                    <%}else{%>
-                                    <label><img
-                                            style="margin-left:2rem; width:40%; height:40%;" src="img/infinity.png"
-                                            alt="---"></label>
-                                    <%}%>
+                            <label style="margin-left:1rem;"><strong>Dates : </strong><%=todos[i]["date"]%>
+                                </labelstyle="margin-left:2rem;></label>
+                            <%}else{%>
+                            <label style="margin-left:1rem;"><strong>Dates : </strong><img
+                                    style="width:15%; height:15%;" src="img/infinity.png" alt="---"></label
+                                style="margin-left:1rem;">
+                            <%}%>
                                   
                                 </div>
-                                
-                                <div name = "todo" class="todoss col-lg-4 col-md-4 col-xs-4">
-                                        <label name = "todolst" style = "word-wrap: break-word;"><%=todos[i].todo.slice(0,40)%><%if(todos[i].todo.length > 40){%>
-                                    <form action="/todoDetail" method="post">
-                                        <input style="display: inline;" name="todo" value=<%=i%> type="hidden"></input>
-                                        <button style="display: inline;" type="submit" class="btn btn-default">...Read
-                                            More</button>
-                                    </form>
-                                    <%}%>
+                                <hr style = "width:20%; background-color: rebeccapurple;">
+                                <div class="row">
+                                        <label name = "todolst" style = "word-wrap: break-word; margin-left:1rem;"><strong>Todo : </strong><%=todos[i].todo.slice(0,100)%><%if(todos[i].todo.length > 100){%>
+                            <form action="/todoDetail" method="post">
+                                <input style="display: inline;" name="todo" value=<%=i%> type="hidden"></input>
+                                <button style="display: inline;" type="submit" class="btn btn-default">...Read
+                                    More</button>
+                            </form>
+                            <%}%>
                                         </label name = "todolst">
-                                </div>
-                            <div name="note" class="todoss col-lg-4 col-md-4 col-xs-4">
-                                    <label name = "todolst" style = "word-wrap: break-word;">
-                                        <%if(todos[i].note.length > 40){%>
-                                    <%=todos[i].note.slice(0,40)%>
-                                    <form action="/todoDetail" method="post">
-                                        <input style="display: inline;" name="todo" value=<%=i%> type="hidden"></input>
-                                        <button style="display: inline;" type="submit" class="btn btn-default">...Read
-                                            More</button>
-                                    </form>
-                                    <%}else{%>
-                                    <%=todos[i].note%>
-                                    <%}%>
-                                    </label>
                             </div>
-                            
-
-
-                            <div class=" todoss col-lg-1  col-md-1 col-xs-1">
-                                <form action="/completeTodo" method="post">
+                            <hr style = "width:20%; background-color: rebeccapurple;">
+                            <div class="row">
+                                    <label name = "todolst" style = "word-wrap: break-word; margin-left:1rem;">
+                                        <%if(todos[i].note.length > 100){%> <strong>Note : </strong>
+                            <%=todos[i].note.slice(0,100)%>
+                            <form action="/todoDetail" method="post">
+                                <input style="display: inline;" name="todo" value=<%=i%> type="hidden"></input>
+                                <button style="display: inline;" type="submit" class="btn btn-default">...Read
+                                    More</button>
+                            </form>
+                            <%}else{%> <strong>Note : </strong>
+                            <%=todos[i].note%>
+                            <%}%>
+                                    </label>
+                        </div>
+                        <!-- <div class=" todoss col-lg-1  col-md-1 col-xs-1">
+                                
         
-                                    <ul id="done-items" class="list-unstyled">
-        
-                                        <li style="display: inline;" name="todo"><input name="todo" type="hidden"
-                                                value=<%=i%>></li>
-                                            <button type="submit"
-                                                class="remove-item btn btn-info btn-xs pull-right"><img src = "img/tic.png" style = "height:15px; width:15px; font-weight: 400;" alt = "Completed"></button>
-                                    </ul>
-                                    </form>
-        
-                                </div>
-
+                                </div> -->
                         </ul>
-                        
-                        
-                        
-                    </div>
+
                     <hr style = "background-color: red;">
                     <%}%>
 
 
-                                </div>
 
-                                <form action="/markAllDone" method="post">
-                                    <button id="checkAll" style="margin-bottom: 10px;" class="btn btn-success">Mark all
-                                        as
-                                        done</button>
-                                </form>
-                                <div class="todo-footer">
-                                    <strong><span class="count-todos"></span></strong> <%=todos.length%> Items Left
+
+                            <form action="/markAllDone" method="post">
+                                <button id="checkAll" style="margin-bottom: 10px;" class="btn btn-success">Mark all
+                                    as
+                                    done</button>
+                            </form>
+                            <div class="todo-footer">
+                                <strong><span class="count-todos"></span></strong> <%=todos.length%> Items Left
+                            </div>
+                    </div>
+
+
                 </div>
             </div>
-        </div>
-        <div class="col-md-12" style="margin-bottom: 10%;">
-            <div class="todolist">
-                <h1>Already Done <form style="display: inline;" action="/removeAll" method="post"><button type="submit"
-                            class="btn btn-danger pull-right">Remove All</button></form>
-                </h1>
 
-                <%for(let i = 0; i < allDone.length; i++){%>
-                <form action="/deleteTodo" method="post">
 
-                    <ul id="done-items" class="list-unstyled">
-                        <div name="date" class="todoss col-lg-2 col-md-2 col-xs-2">
-                            <% if (date !== ""){%>
-                           
-                                    <label style="margin-left:1rem;"><%=date%></label></label>
+
+
+            <div class="col-md-12" style="margin-bottom: 10%;">
+                <div class="todolist">
+                    <h1>Already Done <form style="display: inline;" action="/removeAll" method="post"><button
+                                type="submit" class="btn btn-danger pull-right">Remove All</button></form>
+                    </h1>
+
+
+
+
+
+
+                    <% for(let i = 0; i < allDone.length; i++){ %>
+
+                    <div class="row">
+                        <ul id="sortable" class="list-unstyled">
+                            <form action="/deleteTodo" method="post">
+
+                                <ul id="done-items" class="list-unstyled">
+
+                                    <li style="display: inline;" name="todo"><input name="todo" type="hidden"
+                                            value=<%=i%>></li>
+                                    <button type="submit" class="remove-item btn btn-danger btn-xs pull-right">X</button>
+                                </ul>
+                            </form>
+                            <% if (allDone[i]["date"] !== ""){%>
+
+                            <label style="margin-left:1rem;"><strong>Dates : </strong><%=allDone[i]["date"]%>
+                                </labelstyle="margin-left:2rem;></label>
                             <%}else{%>
-                            <label><img
-                                    style="margin-left:2rem;width:25%; height:25%;" src="img/infinity.png"
-                                    alt="---"></label>
+                            <label style="margin-left:1rem;"><strong>Dates : </strong><img
+                                    style="width:15%; height:15%;" src="img/infinity.png" alt="---"></label
+                                style="margin-left:1rem;">
                             <%}%>
-                          
+                                  
+                                </div>
+                                <hr style = "width:20%; background-color: rebeccapurple;">
+                                <div class="row">
+                                        <label name = "todolst" style = "word-wrap: break-word; margin-left:1rem;"><strong>Todo : </strong><%=allDone[i].todo.slice(0,100)%><%if(allDone[i].todo.length > 100){%>
+                            <form action="/todoDetail" method="post">
+                                <input style="display: inline;" name="todo" value=<%=i%> type="hidden"></input>
+                                <button style="display: inline;" type="submit" class="btn btn-default">...Read
+                                    More</button>
+                            </form>
+                            <%}%>
+                                        </label name = "todolst">
+                            </div>
+                            <hr style = "width:20%; background-color: rebeccapurple;">
+                            <div class="row">
+                                    <label name = "todolst" style = "word-wrap: break-word; margin-left:1rem;">
+                                        <%if(allDone[i].note.length > 100){%> <strong>Note : </strong>
+                            <%=allDone[i].note.slice(0,100)%>
+                            <form action="/todoDetail" method="post">
+                                <input style="display: inline;" name="todo" value=<%=i%> type="hidden"></input>
+                                <button style="display: inline;" type="submit" class="btn btn-default">...Read
+                                    More</button>
+                            </form>
+                            <%}else{%> <strong>Note : </strong>
+                            <%=allDone[i].note%>
+                            <%}%>
+                                    </label>
                         </div>
+                        <!-- <div class=" todoss col-lg-1  col-md-1 col-xs-1">
+                                
+        
+                                </div> -->
+                        </ul>
 
-                        <li style="display: inline;" name="todolst"><input name="todolst" type="hidden"
-                                value=<%=allDone[i]%>><%=allDone[i]%></li>
-                        <button type="submit" class="remove-item btn btn-danger btn-xs pull-right">X</button>
-                    </ul>
-                </form>
-                <hr style = "background-color: red;">
+                    <hr style = "background-color: red;">
+                    <%}%>
 
-                <%}%>
+
+
+
             <div class="todo-footer">
                 <strong><span class="count-todos"></span></strong> <%=allDone.length%> Items Completed
+                </div>
             </div>
+
         </div>
 
-    </div>
+
+
+
+
     </div>
     </div>
 
@@ -198,7 +224,7 @@
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 
     <!-- <script type="text/javascript" src="js/todos.js"></script> -->
-    </body style= "height:100%; position: absolute;">
+</body style="height:100%; position: absolute;">
 
 
 </html>
