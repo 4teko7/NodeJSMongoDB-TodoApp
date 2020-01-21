@@ -16,44 +16,67 @@
 
 </head>
 
-<body>
+<body style = " background-color: teal;">
+
+    <%if(isLogin){%>
+        <div class = 'container' style = "text-align: center; ">
+            <div class="col-md-12 col-xs-12 col-lg-12">
+                <div class = "nav"> 
+                    <h1 class = "logged">Welcome, <em><%=user.name%> <%=user.surname%></em></h1>
+
+                    <p style="display:inline; margin-top:1rem;" class = " pull-right"><form action="/logout" method = "post" style = "display: inline;"><button class = "logout">LOGOUT</button></form action=""></p>
+                </div>
+            </div>
+        </div>
+
+
+    <%}else{%>
+        <div class = 'container' style = "text-align: center; ">
+            <div class="col-md-12 col-xs-12 col-lg-12">
+                <div class = "nav"> 
+                    <h1 class = "reglog reg" id = "id1" style = "display:inline-block;  position: static;">REGISTER</h1>
+                    <h1 class = "reglog log" style = "display:inline-block;   position: static;">LOGIN</h1>
+                </div>
+            </div>
+        </div>
+    <%}%>
+
     <!-- style = "display:inline-block" -->
     <div class="container">
-            <div class="col-md-12 col-xs-12 col-lg-12">
+
+        
+        <div id = "reg" style = "display:none;">
+            <%-include('register')%>
+        </div>
+        <div id = "log" style = "display:none;">
+            <%-include('login')%>
+        </div>
+
+
+            <div class="col-md-12 col-xs-12 col-lg-12 ">
                 <div class="todolist not-done">
                     
-                    
-                    <div class="row">
-                        <div class="container" style=" text-align: center;">
-                            <div class="col-md-9" style="display: inline;">
-                                <h1 style="display: inline;">Todos</h1>
-                            </div>
-                            <div class="col-md-3 pull-right" style="display: inline;">
-                                <scan style="  font-size: 1.5rem; font-weight: bold;"><%=date%></scan>
-                            </div>
-                        </div>
+                    <p style="font-size: 1.5rem;font-weight: bold;" class = " pull-right"><%=date%></p>
+            
+                    <h1 style="text-align: center;">Todos</h1>
+            
+            
+            <form action="/addTodo" method="post">
+                <input type="text" name="todo" class="form-control add-todo" placeholder="Add todo"
+                    style="height: 50px; margin-bottom: 10px;" required>
+                <scan>Pick a Date : </scan><input type="date" name="date" class="add-todo"
+                    style="height: 10%; margin-bottom: 10px;"><br>
+                <scan>Write Note : </scan><input type="text" name="note" class="add-todo"
+                    style="height: 10%; margin-bottom: 10px;" placeholder="Write Something">
+                <button id="addTodo" type="submit" name="nameAddTodo" class="form-control btn btn-primary">Add
+                    Todo</button>
+            </form>
+            <hr>
 
-                    </div>
-                    
-                    
-                    <form action="/addTodo" method="post">
-                        <input type="text" name="todo" class="form-control add-todo" placeholder="Add todo"
-                            style="height: 50px; margin-bottom: 10px;" required>
-                        <scan>Pick a Date : </scan><input type="date" name="date" class="add-todo"
-                            style="height: 10%; margin-bottom: 10px;"><br>
-                        <scan>Write Note : </scan><input type="text" name="note" class="add-todo"
-                            style="height: 10%; margin-bottom: 10px;" placeholder="Write Something">
-                        <button id="addTodo" type="submit" name="nameAddTodo" class="form-control btn btn-primary">Add
-                            Todo</button>
-                    </form>
-                    <hr>
-
-
-
-
+            
 
                     <% for(let i = 0; i < todos.length; i++){ %>
-                    <div class="row" style = "margin-right:0.5rem;">
+                    <div class="row" style = "margin-right:0.5rem; ">
                         <ul id="sortable" class="list-unstyled">
                             <form action="/completeTodo" method="post">
                                 <ul id="done-items" class="list-unstyled">
@@ -65,10 +88,10 @@
                                 </ul>
                             </form>
                             <% if (todos[i]["date"] !== ""){%>
-                            <label style="margin-left:1rem;"><strong style = "margin-left:1rem;">Dates : </strong style = "margin-left:1rem;"><%=todos[i]["date"]%>
+                            <label style=""><strong style = "margin-left:1rem;">Dates : </strong style = "margin-left:1rem;"><%=todos[i]["date"]%>
                                 </labelstyle="margin-left:2rem;></label>
                             <%}else{%>
-                            <label style="margin-left:1rem;"><strong style = "margin-left:1rem;">Dates : </strong style = "margin-left:1rem;"><img
+                            <label style=""><strong style = "margin-left:1rem;">Dates : </strong style = "margin-left:1rem;"><img
                                     style="width:15%; height:15%;" src="img/infinity.png" alt="---"></label
                                 style="margin-left:1rem;">
                             <%}%>
@@ -76,7 +99,7 @@
                                 </div>
                                 <hr style = "width:20%; background-color: rebeccapurple;">
                                 <div class="row" style = "margin-right:0.5rem;">
-                                        <label name = "todolst" style = "word-wrap: break-word; margin-left:1rem;"><strong style = "margin-left:1rem;">Todo : </strong style = "margin-left:1rem;"><%=todos[i].todo.slice(0,100)%><%if(todos[i].todo.length > 100){%>
+                                        <label name = "todolst" style = "word-wrap: break-word;"><strong style = "margin-left:1rem;">Todo : </strong style = "margin-left:1rem;"><%=todos[i].todo.slice(0,100)%><%if(todos[i].todo.length > 100){%>
                             <form action="/todoDetail" method="post">
                                 <input style="display: inline;" name="todo" value=<%=i%> type="hidden"></input>
                                 <button style="display: inline;" type="submit" class="btn btn-default">...Read
@@ -87,15 +110,15 @@
                             </div>
                             <hr style = "width:20%; background-color: rebeccapurple;">
                             <div class="row" style = "margin-right:0.5rem;">
-                                    <label name = "todolst" style = "word-wrap: break-word; margin-left:1rem;">
-                                        <%if(todos[i].note.length > 100){%> <strong style = "margin-left:1rem;">Note : </strong style = "margin-left:1rem;">
+                                    <label name = "todolst" style = "word-wrap: break-word;">
+                                        <%if(todos[i].note.length > 100){%> <strong style = "margin-left:1rem;">Note : </strong>
                             <%=todos[i].note.slice(0,100)%>
                             <form action="/todoDetail" method="post">
                                 <input style="display: inline;" name="todo" value=<%=i%> type="hidden"></input>
                                 <button style="display: inline;" type="submit" class="btn btn-default">...Read
                                     More</button>
                             </form>
-                            <%}else{%> <strong>Note : </strong>
+                            <%}else{%> <strong style = "margin-left:1rem;">Note : </strong style = "margin-left:1rem;">
                             <%=todos[i].note%>
                             <%}%>
                                     </label>
@@ -151,7 +174,7 @@
                         <% if (allDone[i]["date"] !== ""){%>
                         <label><strong style = "margin-left:1rem;">Dates : </strong><%=allDone[i]["date"]%></label>
                         <%}else{%>
-                        <label style="margin-left:1rem;"><strong>Dates : </strong><img style="width:15%; height:15%;"
+                        <label><strong style="margin-left:1rem;">Dates : </strong style="margin-left:1rem;"><img style="width:15%; height:15%;"
                                 src="img/infinity.png" alt="---"></label>
                         <%}%>
                             </div>
@@ -184,7 +207,7 @@
                             
                             
                             <div class="row" style = "margin-right:0.5rem;">
-                                    <label name = "todolst" style = "word-wrap: break-word; margin-left:1rem;">
+                                    <label name = "todolst" style = "word-wrap: break-word;">
                                         <%if(allDone[i].note.length > 100){%> <strong style = "margin-left:1rem;">Note : </strong>
                         <%=allDone[i].note.slice(0,100)%>
                         <form action="/todoDetail" method="post">
@@ -192,7 +215,7 @@
                             <button style="display: inline;" type="submit" class="btn btn-default">...Read
                                 More</button>
                         </form>
-                        <%}else{%> <strong>Note : </strong>
+                        <%}else{%> <strong style = "margin-left:1rem;">Note : </strong style = "margin-left:1rem;">
                         <%=allDone[i].note%>
                         <%}%>
                                     </label>
@@ -226,6 +249,7 @@
     <!------ Include the above in your HEAD tag ---------->
 
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="js/todos.js"></script>
 
     <!-- <script type="text/javascript" src="js/todos.js"></script> -->
 </body>

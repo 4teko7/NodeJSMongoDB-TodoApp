@@ -32,9 +32,50 @@
 // });
 
 //delete done task from "already done"
-$('.todolist').on('click','.remove-item',function(){
-    removeItem(this);
+// $('.todolist').on('click','.remove-item',function(){
+//     removeItem(this);
+// });
+
+
+$('#closeReg').on("click",function(){
+    var reglog = document.getElementById("reg");
+    // reglog.style.display = "block";
+    reglog.style.display = "none";
 });
+$('#closeLog').on("click",function(){
+    var reglog = document.getElementById("log");
+    // reglog.style.display = "block";
+    reglog.style.display = "none";
+});
+
+
+$('.reg').on("click",function(){
+    var reglog = document.getElementById("reg");
+    // reglog.style.display = "block";
+    reglog.style.display = "";
+    reglog.style.position = "absolute";
+    reglog.style.zIndex = "10";
+});
+$('.log').on("click",function(){
+    var reglog = document.getElementById("log");
+    // reglog.style.display = "block";
+    reglog.style.display = "";
+    reglog.style.position = "absolute";
+    reglog.style.zIndex = "10";
+});
+
+// $('#register').on("click",()=>{
+//     reglog.style.display = "none";
+// });
+
+function ChangeUrl(){ 
+    var image1 = document.getElementById("image1");
+    var url = prompt("change image source",image1.src);   
+    image1.src= url;
+}
+
+
+
 
 // // count tasks
 // function countTodos(){
@@ -76,6 +117,6 @@ $('.todolist').on('click','.remove-item',function(){
 // }
 
 //remove done task from list
-function removeItem(element){
-    $(element).parent().remove();
-}
+// function removeItem(element){
+//     $(element).parent().remove();
+// }
