@@ -18,11 +18,11 @@
 
 <body style = " background-color: teal;">
 
-    <%if(isLogin){%>
+    <%if(dic.isLogin){%>
         <div class = 'container' style = "text-align: center; ">
             <div class="col-md-12 col-xs-12 col-lg-12">
                 <div class = "nav"> 
-                    <h1 class = "logged">Welcome, <em><%=user.name%> <%=user.surname%></em></h1>
+                    <h1 class = "logged">Welcome, <em><%=dic.user.name%> <%=dic.user.surname%></em></h1>
 
                     <p style="display:inline; margin-top:1rem;" class = " pull-right"><form action="/logout" method = "post" style = "display: inline;"><button class = "logout">LOGOUT</button></form action=""></p>
                 </div>
@@ -56,7 +56,7 @@
             <div class="col-md-12 col-xs-12 col-lg-12 ">
                 <div class="todolist not-done">
                     
-                    <p style="font-size: 1.5rem;font-weight: bold;" class = " pull-right"><%=date%></p>
+                    <p style="font-size: 1.5rem;font-weight: bold;" class = " pull-right"><%=dic.date%></p>
             
                     <h1 style="text-align: center;">Todos</h1>
             
@@ -75,7 +75,7 @@
 
             
 
-                    <% for(let i = 0; i < todos.length; i++){ %>
+                    <% for(let i = 0; i < dic.todos.length; i++){ %>
                     <div class="row" style = "margin-right:0.5rem; ">
                         <ul id="sortable" class="list-unstyled">
                             <form action="/completeTodo" method="post">
@@ -87,11 +87,11 @@
                                             alt="Completed"></button>
                                 </ul>
                             </form>
-                            <% if (todos[i]["date"] !== ""){%>
-                            <label style=""><strong style = "margin-left:1rem;">Dates : </strong style = "margin-left:1rem;"><%=todos[i]["date"]%>
+                            <% if (dic.todos[i]["date"] !== ""){%>
+                            <label style=""><strong style = "margin-left:1rem;">Dates : </strong style = "margin-left:1rem;"><%=dic.todos[i]["date"]%>
                                 </labelstyle="margin-left:2rem;></label>
                             <%}else{%>
-                            <label style=""><strong style = "margin-left:1rem;">Dates : </strong style = "margin-left:1rem;"><img
+                            <label><strong style = "margin-left:1rem;">Dates : </strong style = "margin-left:1rem;"><img
                                     style="width:15%; height:15%;" src="img/infinity.png" alt="---"></label
                                 style="margin-left:1rem;">
                             <%}%>
@@ -99,11 +99,10 @@
                                 </div>
                                 <hr style = "width:20%; background-color: rebeccapurple;">
                                 <div class="row" style = "margin-right:0.5rem;">
-                                        <label name = "todolst" style = "word-wrap: break-word;"><strong style = "margin-left:1rem;">Todo : </strong style = "margin-left:1rem;"><%=todos[i].todo.slice(0,100)%><%if(todos[i].todo.length > 100){%>
+                                        <label name = "todolst" style = "word-wrap: break-word;"><strong style = "margin-left:1rem;">Todo : </strong style = "margin-left:1rem;"><%=dic.todos[i].todo.slice(0,100)%><%if(dic.todos[i].todo.length > 100){%>
                             <form action="/todoDetail" method="post">
                                 <input style="display: inline;" name="todo" value=<%=i%> type="hidden"></input>
-                                <button style="display: inline;" type="submit" class="btn btn-default">...Read
-                                    More</button>
+                                <button style="display: inline;" type="submit" class="btn btn-default">...Read More</button>
                             </form>
                             <%}%>
                                         </label name = "todolst">
@@ -111,15 +110,14 @@
                             <hr style = "width:20%; background-color: rebeccapurple;">
                             <div class="row" style = "margin-right:0.5rem;">
                                     <label name = "todolst" style = "word-wrap: break-word;">
-                                        <%if(todos[i].note.length > 100){%> <strong style = "margin-left:1rem;">Note : </strong>
-                            <%=todos[i].note.slice(0,100)%>
+                                        <%if(dic.todos[i].note.length > 100){%> <strong style = "margin-left:1rem;">Note : </strong>
+                            <%=dic.todos[i].note.slice(0,100)%>
                             <form action="/todoDetail" method="post">
                                 <input style="display: inline;" name="todo" value=<%=i%> type="hidden"></input>
-                                <button style="display: inline;" type="submit" class="btn btn-default">...Read
-                                    More</button>
+                                <button style="display: inline;" type="submit" class="btn btn-default">...Read More</button>
                             </form>
                             <%}else{%> <strong style = "margin-left:1rem;">Note : </strong style = "margin-left:1rem;">
-                            <%=todos[i].note%>
+                            <%=dic.todos[i].note%>
                             <%}%>
                                     </label>
                         </div>
@@ -131,12 +129,10 @@
                     <hr style = "background-color: red;">
                     <%}%>
                             <form action="/markAllDone" method="post">
-                                <button id="checkAll" style="margin-bottom: 10px;" class="btn btn-success">Mark all
-                                    as
-                                    done</button>
+                                <button id="checkAll" style="margin-bottom: 10px;" class="btn btn-success">Mark all as done</button>
                             </form>
                             <div class="todo-footer">
-                                <strong><span class="count-todos"></span></strong> <%=todos.length%> Items Left
+                                <strong><span class="count-todos"></span></strong> <%=dic.todos.length%> Items Left
                             </div>
                     </div>
                 </div>
@@ -158,7 +154,7 @@
                 
                 <br><br>
                 
-                <% for(let i = 0; i < allDone.length; i++){ %>
+                <% for(let i = 0; i < dic.allDone.length; i++){ %>
                 
                 
                 
@@ -171,8 +167,8 @@
                                 <button type="submit" class="remove-item btn btn-danger btn-xs pull-right" style = "margin-right:0; position:static; ">X</button>
                             </ul>
                         </form>
-                        <% if (allDone[i]["date"] !== ""){%>
-                        <label><strong style = "margin-left:1rem;">Dates : </strong><%=allDone[i]["date"]%></label>
+                        <% if (dic.allDone[i]["date"] !== ""){%>
+                        <label><strong style = "margin-left:1rem;">Dates : </strong><%=dic.allDone[i]["date"]%></label>
                         <%}else{%>
                         <label><strong style="margin-left:1rem;">Dates : </strong style="margin-left:1rem;"><img style="width:15%; height:15%;"
                                 src="img/infinity.png" alt="---"></label>
@@ -188,8 +184,8 @@
                                 
                                 
                                 <div class="row" style = "margin-right:0.5rem;">
-                                        <label name = "todolst" style = "word-wrap: break-word; "><strong style = "margin-left:1rem;">Todo : </strong><%=allDone[i].todo.slice(0,100)%>
-                        <%if(allDone[i].todo.length > 100){%>
+                                        <label name = "todolst" style = "word-wrap: break-word; "><strong style = "margin-left:1rem;">Todo : </strong><%=dic.allDone[i].todo.slice(0,100)%>
+                        <%if(dic.allDone[i].todo.length > 100){%>
                         <form  action="/todoDetail" method="post">
                             <input style="display: inline;" name="todo" value=<%=i%> type="hidden">
                             <button style="display: inline;" type="submit" class="btn btn-default">...Read More</button>
@@ -208,15 +204,15 @@
                             
                             <div class="row" style = "margin-right:0.5rem;">
                                     <label name = "todolst" style = "word-wrap: break-word;">
-                                        <%if(allDone[i].note.length > 100){%> <strong style = "margin-left:1rem;">Note : </strong>
-                        <%=allDone[i].note.slice(0,100)%>
+                                        <%if(dic.allDone[i].note.length > 100){%> <strong style = "margin-left:1rem;">Note : </strong>
+                        <%=dic.allDone[i].note.slice(0,100)%>
                         <form action="/todoDetail" method="post">
                             <input style="display: inline;" name="todo" value=<%=i%> type="hidden">
                             <button style="display: inline;" type="submit" class="btn btn-default">...Read
                                 More</button>
                         </form>
                         <%}else{%> <strong style = "margin-left:1rem;">Note : </strong style = "margin-left:1rem;">
-                        <%=allDone[i].note%>
+                        <%=dic.allDone[i].note%>
                         <%}%>
                                     </label>
                         </div>
@@ -236,7 +232,7 @@
 
 
                         <div class="todo-footer">
-                            <strong><span class="count-todos"></span></strong> <%=allDone.length%> Items Completed
+                            <strong><span class="count-todos"></span></strong> <%=dic.allDone.length%> Items Completed
 
                         </div>
                 </div>

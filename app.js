@@ -2,6 +2,8 @@ var todos = [];
 var allDone = [];
 var isLogin = false;
 var user = {};
+var canRegister = true;
+
 module.export = todos;
 module.export = allDone;
 const express = require("express");
@@ -9,9 +11,14 @@ const bodyParser = require("body-parser");
 const request = require("request");
 const app = express();
 var mysql = require("mysql");
-
 const date = require(__dirname + "/date.js");
-
+var dic = {todos: todos,
+    allDone: allDone,
+    date: date(),
+    isLogin:isLogin,
+    user:user,
+    canRegister: canRegister
+}
 
 app.use(bodyParser.urlencoded({
     extended: true
@@ -55,13 +62,9 @@ connection.connect((err)=>{
 
 
 app.get("/", function (req, res) {
-    res.render("todo", {
-        todos: todos,
-        allDone: allDone,
-        date: date(),
-        isLogin:isLogin,
-        user:user
-    });
+    dic.canRegister = true;
+    res.render("todo", {dic:dic});
+    console.log(dic.user);
 });
 
 
@@ -77,41 +80,39 @@ app.post("/addTodo", function (req, res) {
     if (req.body.todo == "") {
         res.redirect("/todo");
     } else {
-        todos.push({ "date": req.body.date, "todo": req.body.todo, "note": req.body.note });
+        dic.todos.push({ "date": req.body.date, "todo": req.body.todo, "note": req.body.note });
         res.redirect("/");
     }
 });
 
 app.post("/markAllDone", function (req, res) {
-    for (let i = 0; i < todos.length; i++) {
-        allDone.push(todos[i]);
+    for (let i = 0; i < dic.todos.length; i++) {
+        dic.allDone.push(dic.todos[i]);
     }
-    todos.length = 0;
+    dic.todos.length = 0;
     res.redirect("/");
 });
 
 app.post("/deleteTodo", function (req, res) {
-    allDone = allDone.filter(item => item !== allDone[req.body.todo]);
+    dic.allDone = dic.allDone.filter(item => item !== dic.allDone[req.body.todo]);
     res.redirect("/");
 });
 
 app.post("/removeAll", function (req, res) {
-    allDone.length = 0;
+    dic.allDone.length = 0;
     res.redirect("/");
 });
 
 app.post("/todoDetail",function(req,res){
     res.render("todoDetail",{
-        todos: todos,
-        allDone: allDone,
-        date: date(),
+        dic : dic,
         i:req.body.todo});
 });
 
 app.post("/completeTodo",function(req,res){
 
-    allDone.push(todos[req.body.todo])
-    todos = todos.filter(item => item !== todos[req.body.todo]);
+    dic.allDone.push(dic.todos[req.body.todo])
+    dic.todos = dic.todos.filter(item => item !== dic.todos[req.body.todo]);
     res.redirect("/");
 });
 
@@ -124,8 +125,8 @@ app.post("/login",(req,res)=>{
             if(err){
 
             }else{
-                isLogin = true;
-                user = result[0]
+                dic.isLogin = true;
+                dic.user = result[0]
                 console.log(user);
                 res.redirect("/");
             }
@@ -134,7 +135,7 @@ app.post("/login",(req,res)=>{
 });
 app.post("/logout",(req,res)=>{
 
-    isLogin = false;
+    dic.isLogin = false;
     res.redirect("/");
 });
 
@@ -150,18 +151,36 @@ app.post("/register",(req,res)=>{
     }else if(req.body.woman){
         gender = "Woman";
     }else{
-        gender = "No Gender<"
+        gender = "No Gender"
     }
 
-    user = {name:firstname,surname:surname,username:username,password:password,date:date(),gender:gender};
-    let query = "INSERT INTO users SET ?";
-    connection.query(query,user,(err,result)=>{
-        if(err) throw err;
-        console.log("User Added.");
+    let queryFirst = `SELECT * FROM users WHERE username = '${username}'`;
+    connection.query(queryFirst,(err,result)=>{
 
+        if(result[0] != undefined){
+            dic.canRegister = false;
+            dic.isLogin = false;
+            dic.user = {};
+            dic.gender = "";
+            dic.date = "";
+            console.log("DIC : " + dic);
+            res.render("register",{dic:dic});
+        }else{
+            dic.canRegister = true;
+            dic.user = {name:firstname,surname:surname,username:username,password:password,date:date(),gender:gender};
+            let query = "INSERT INTO users SET ?";
+            connection.query(query,dic.user,(err,result)=>{
+                if(err) throw err;
+                console.log("User Added.");
+        
+            });
+            dic.isLogin = true;
+            res.redirect("/");
+        }
     });
-    isLogin = true;
-    res.redirect("/");
+
+
+    
 });
 
 app.listen(process.env.PORT || 8000, function () {

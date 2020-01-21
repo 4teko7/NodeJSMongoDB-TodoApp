@@ -26,7 +26,9 @@
 
 <!------ Include the above in your HEAD tag ---------->
 
-<div class="container">
+<div class="container" style = "margin: 10rem auto; max-width:100%; max-height:100%;">
+	
+
         <div class="row centered-form" style = "margin:auto auto;">
         <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
         	<div class="panel panel-default">
@@ -37,6 +39,11 @@
 			 			<div class="panel-body">
 			    		<form action = "/register" method = "post">
 			    			<div class="row">
+								<%if(!(dic.canRegister)){%>
+										<div class="form-group">
+											<h1 class = "reglog log" style = "text-align: center; position: static; margin: auto auto; font-size: 2rem;">Username is already exist.</h1>
+										</div>
+									<%}%>
 			    				<div class="col-xs-6 col-sm-6 col-md-6">
 			    					<div class="form-group">
 			                <input type="text" name="firstname" id="first_name" class="form-control input-sm" placeholder="First Name" required>

@@ -17,8 +17,8 @@
 
         </div>
         <div  style = "text-align: center;">
-        <% if (todos[i]["date"] !== ""){%>
-            <label><input  type = "hidden"><%=todos[i]["date"]%></label>
+        <% if (dic.todos[i]["date"] !== ""){%>
+            <label><input  type = "hidden"><%=dic.todos[i]["date"]%></label>
             <%}else{%>
                 
             <label><input type = "hidden"><img style="width:10%; height:10%;" src="img/infinity.png"
@@ -36,7 +36,7 @@
             </div>
             
 
-            <label style = "word-wrap: break-word;"><%=todos[i].todo%></label>
+            <label style = "word-wrap: break-word;"><%=dic.todos[i].todo%></label>
             <hr style = "margin-right:2rem">
             <br><br>
             <div class="row">
@@ -45,7 +45,7 @@
 
             </div>
 
-            <label style = "word-wrap: break-word;"><%=todos[i].note%></label>
+            <label style = "word-wrap: break-word;"><%=dic.todos[i].note%></label>
 
     </div>
 </div>
