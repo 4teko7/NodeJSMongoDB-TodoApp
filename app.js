@@ -59,11 +59,19 @@ app.use(express.static("public"));
 app.set("view engine", "ejs");
 
 var connection = mysql.createConnection({
-    host : 'localhost',
-    user : 'root',
-    password : '',
-    database : "tododb"
+    host : 'sql10.freemysqlhosting.net',
+    user : 'sql10320080',
+    password : 'U3IEDy2bfF',
+    database : "sql10320080"
 });
+
+// var connection = mysql.createConnection({
+//     host : 'localhost',
+//     user : 'root',
+//     password : '',
+//     database : "tododb2"
+// });
+
 
 connection.connect((err)=>{
     if(err) console.log(err);
@@ -93,7 +101,7 @@ connection.connect((err)=>{
 
 
 
-app.get("/", function (req, res) {
+app.get("/", (req, res) => {
     dic.canRegister = true;
     
     res.render("todo", {dic:dic});
@@ -111,7 +119,7 @@ app.get("/register",(req,res)=>{
 app.post("/addTodo", function (req, res) {
     
     if (req.body.todo == "") {
-        res.redirect("/todo");
+        res.redirect("/");
     } else {
         dic.todos.push({ "date": req.body.date, "todo": req.body.todo, "note": req.body.note });
         res.redirect("/");
@@ -155,7 +163,9 @@ app.post("/login",(req,res)=>{
         let password = req.body.password;
         let query = `SELECT * FROM users where username = '${username}' and password = '${password}'`;
         connection.query(query,(err,result) => {
-            if(err){
+            console.log("ERROR FOUND @@@@@@@@@@@@@@@22" +err);
+
+            if(err != null){
                 res.redirect("/");
             }else{
                 dic.user = result[0]
@@ -166,12 +176,13 @@ app.post("/login",(req,res)=>{
 });
 
 function logged(res){
-    
+   
     dic.isLogin = true;
 
     let query = `Select todos From users where username = '${dic.user.username}'`;
     connection.query(query,(err,result)=>{
         if(err) {
+            console.log("ERROR FOUND !");
             res.redirect("/");
         }
         if(result[0] != undefined){
@@ -181,26 +192,29 @@ function logged(res){
                 for(var i = 0; i < parsed.length; i++){
                     dic.todos.push(parsed[i]);
                 }
+
+
         }
         }
     });
+    
 
-    query = `Select allDone from users where username = '${dic.user.username}'`;
-    connection.query(query,(err,result)=>{
+    query = `Select alldone from users where username = '${dic.user.username}'`;
+    connection.query(query,(err,result) => {
         if(err){
             res.redirect('/');
         }
+
         if(result[0] != undefined){
-            if(result[0].allDone != null){
-                parsed = JSON.parse(result[0].allDone);
-                
+            if(result[0].alldone != undefined){
+                parsed = JSON.parse(result[0].alldone);
                 for(var i = 0; i < parsed.length; i++){
                     dic.allDone.push(parsed[i]);
                 }
-                 
             }
         }
     });
+
     res.redirect("/");
             
 }
@@ -239,7 +253,6 @@ app.post("/register",(req,res)=>{
 
     let queryFirst = `SELECT * FROM users WHERE username = '${username}'`;
     connection.query(queryFirst,(err,result)=>{
-
         if(result[0] != undefined){
             dic.canRegister = false;
             dic.isLogin = false;
@@ -249,7 +262,7 @@ app.post("/register",(req,res)=>{
             res.render("register",{dic:dic});
         }else{
             dic.canRegister = true;
-            dic.user = {name:firstname,surname:surname,username:username,password:password,date:date(),gender:gender};
+            dic.user = {name:firstname,surname:surname,username:username,password:password,date:date.getDate,gender:gender};
             let query = "INSERT INTO users SET ?";
             connection.query(query,dic.user,(err,result)=>{
                 if(err) throw err;
@@ -334,6 +347,6 @@ app.post("/tr",(req,res)=>{
 
 });
 
-app.listen(process.env.PORT || 8000, function () {
+app.listen(process.env.PORT || 3000, function () {
     console.log("app started");
 });
