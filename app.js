@@ -3,7 +3,35 @@ var allDone = [];
 var isLogin = false;
 var user = {};
 var canRegister = true;
-
+language = {welcome : "Welcome, ",
+                logout : "Logout",
+                todos : "Todos",
+                addTodo : "Add Todo",
+                pickADate : "Pick a Date",
+                writeNote : "Write Note",
+                addTodo : "Add Todo",
+                dates : "Dates",
+                todo : "Todo",
+                readMore : "Read More",
+                note : "Note",
+                markAllAsDone : "Mark All As Done",
+                itemsLeft : "Items Left",
+                alreadyDone : "Already Done",
+                removeAll : "Remove All",
+                itemsCompleted : "Items Completed",
+                register : "Register",
+                login : "Login",
+                gotoMainPage : "Go to Main Page",
+                usernameexist:"Username is already exist",
+                man : "Man",
+                woman : "Woman",
+                firstname : "First Name",
+                lastname : "Last Name",
+                password : "Password",
+                username : "Username",
+                confirmPassword : "Confirm Password",
+                language : "Türkçe"
+    }
 module.export = todos;
 module.export = allDone;
 const express = require("express");
@@ -14,11 +42,15 @@ var mysql = require("mysql");
 const date = require(__dirname + "/date.js");
 var dic = {todos: todos,
     allDone: allDone,
-    date: date(),
+    date: date.getDate,
     isLogin:isLogin,
     user:user,
-    canRegister: canRegister
+    canRegister: canRegister,
+    language:language
 }
+
+
+
 
 app.use(bodyParser.urlencoded({
     extended: true
@@ -63,8 +95,8 @@ connection.connect((err)=>{
 
 app.get("/", function (req, res) {
     dic.canRegister = true;
+    
     res.render("todo", {dic:dic});
-    console.log(dic.user);
 });
 
 
@@ -77,6 +109,7 @@ app.get("/register",(req,res)=>{
 
 
 app.post("/addTodo", function (req, res) {
+    
     if (req.body.todo == "") {
         res.redirect("/todo");
     } else {
@@ -112,7 +145,7 @@ app.post("/todoDetail",function(req,res){
 app.post("/completeTodo",function(req,res){
 
     dic.allDone.push(dic.todos[req.body.todo])
-    dic.todos = dic.todos.filter(item => item !== dic.todos[req.body.todo]);
+    dic.todos = (dic.todos).filter(item => item !== (dic.todos)[req.body.todo]);
     res.redirect("/");
 });
 
@@ -123,19 +156,69 @@ app.post("/login",(req,res)=>{
         let query = `SELECT * FROM users where username = '${username}' and password = '${password}'`;
         connection.query(query,(err,result) => {
             if(err){
-
-            }else{
-                dic.isLogin = true;
-                dic.user = result[0]
-                console.log(user);
                 res.redirect("/");
+            }else{
+                dic.user = result[0]
+                logged(res);
             }
         });
 
 });
-app.post("/logout",(req,res)=>{
 
+function logged(res){
+    
+    dic.isLogin = true;
+
+    let query = `Select todos From users where username = '${dic.user.username}'`;
+    connection.query(query,(err,result)=>{
+        if(err) {
+            res.redirect("/");
+        }
+        if(result[0] != undefined){
+            if(result[0].todos != null){
+                var parsed = JSON.parse(result[0].todos);
+ 
+                for(var i = 0; i < parsed.length; i++){
+                    dic.todos.push(parsed[i]);
+                }
+        }
+        }
+    });
+
+    query = `Select allDone from users where username = '${dic.user.username}'`;
+    connection.query(query,(err,result)=>{
+        if(err){
+            res.redirect('/');
+        }
+        if(result[0] != undefined){
+            if(result[0].allDone != null){
+                parsed = JSON.parse(result[0].allDone);
+                
+                for(var i = 0; i < parsed.length; i++){
+                    dic.allDone.push(parsed[i]);
+                }
+                 
+            }
+        }
+    });
+    res.redirect("/");
+            
+}
+app.post("/logout",(req,res)=>{
     dic.isLogin = false;
+    
+    let stringifyTodos = JSON.stringify(dic.todos);
+    let stringifyAllDone = JSON.stringify(dic.allDone);
+    let query = `Update users set todos = '${stringifyTodos}' where username = '${dic.user.username}'`;
+    connection.query(query,(err,result)=>{
+        
+    });
+    query = `update users set allDone = '${stringifyAllDone}' where username = '${dic.user.username}'`;
+    connection.query(query,(err,result)=>{
+
+    });
+    dic.todos.length = 0;
+    dic.allDone.length = 0;
     res.redirect("/");
 });
 
@@ -163,7 +246,6 @@ app.post("/register",(req,res)=>{
             dic.user = {};
             dic.gender = "";
             dic.date = "";
-            console.log("DIC : " + dic);
             res.render("register",{dic:dic});
         }else{
             dic.canRegister = true;
@@ -174,13 +256,82 @@ app.post("/register",(req,res)=>{
                 console.log("User Added.");
         
             });
-            dic.isLogin = true;
-            res.redirect("/");
+            logged(res);
         }
     });
 
+});
 
-    
+app.post("/en",(req,res)=>{
+
+    dic.language = {welcome : "Welcome, ",
+                logout : "Logout",
+                todos : "Todos",
+                addTodo : "Add Todo",
+                pickADate : "Pick a Date",
+                writeNote : "Write Note",
+                addTodo : "Add Todo",
+                dates : "Dates",
+                todo : "Todo",
+                readMore : "Read More",
+                note : "Note",
+                markAllAsDone : "Mark All As Done",
+                itemsLeft : "Items Left",
+                alreadyDone : "Already Done",
+                removeAll : "Remove All",
+                itemsCompleted : "Items Completed",
+                register : "Register",
+                login : "Login",
+                gotoMainPage : "Go to Main Page",
+                usernameexist:"Username is already exist",
+                man : "Man",
+                woman : "Woman",
+                firstname : "First Name",
+                lastname : "Last Name",
+                password : "Password",
+                username : "Username",
+                confirmPassword : "Confirm Password",
+                language : "Türkçe"
+    }
+    dic.date = date.getDate;
+    res.redirect('/');
+
+});
+
+app.post("/tr",(req,res)=>{
+
+    dic.language = {welcome : "Hoşgeldiniz, ",
+                logout : "Çıkış",
+                todos : "Yapılacaklar",
+                addTodoPlaceHolder : "Ne Yapmak Istersin ?",
+                pickADate : "Tarih Seç",
+                writeNote : "Not Yaz",
+                addTodo : "Planı Ekle",
+                dates : "Tarih",
+                todo : "Yapılacak",
+                readMore : "Devamını Oku",
+                note : "Not",
+                markAllAsDone : "Hepsini Yaptım",
+                itemsLeft : "Plan Kaldı",
+                alreadyDone : "Tamamlananlar",
+                removeAll : "Hepsini Sil",
+                itemsCompleted : "Plan Tamamlandı.",
+                register : "Kayıt Ol",
+                login : "Giriş Yap",
+                gotoMainPage : "Anasayfaya Git",
+                usernameexist:"Kullanıcı Adını Başkası Kullanıyor",
+                man : "Bay",
+                woman : "Bayan",
+                firstname : "İsim",
+                lastname : "Soyisim",
+                password : "Şifre",
+                username : "Kullanıcı Adı",
+                confirmPassword : "Şifrenizi Doğrula",
+                language : "English"
+    }
+    dic.date = date.tarih;
+    res.redirect('/');
+
 });
 
 app.listen(process.env.PORT || 8000, function () {

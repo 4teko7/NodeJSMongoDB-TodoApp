@@ -137,3 +137,13 @@ div{
     font-size: 1.5rem;
     font-weight: bold;
 }
+
+.dil{
+    width:7rem;
+    height:3rem;
+    font-size:1rem;
+    font-weight: bolder;
+    color:red;
+    margin-right: 0.5rem;
+    margin-top : 0.5rem;
+}

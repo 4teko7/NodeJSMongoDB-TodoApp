@@ -74,6 +74,71 @@ function ChangeUrl(){
     image1.src= url;
 }
 
+//@@@@@@@@@@@@@@@@@   VARIABLES   @@@@@@@@@@@@@@@@
+
+
+// $('.dil').on("click",function(){
+//     var reglog = document.getElementById("dil");
+//     var dilForm = document.getElementById("dilForm");
+//     if(reglog.textContent == "English") {
+//         reglog.textContent = "Türkçe";
+//         document.dilForm.action = "/en";
+
+//         var welcome = "Welcome, ";
+//         var logout = "Logout";
+//         var todos = "Todos";
+//         var addTodo = "Add Todo";
+//         var pickADate = "Pick a Date";
+//         var writeNote = "Write Note";
+//         var addTodo = "Add Todo";
+//         var dates = "Dates";
+//         var todo = "Todo";
+//         var readMore = "Read More";
+//         var note = "Note";
+//         var markAllAsDone = "Mark All As Done";
+//         var itemsLeft = "Items Left";
+//         var alreadyDone = "Already Done";
+//         var removeAll = "Remove All";
+//         var itemsCompleted = "Items Completed";
+//         var register = "Register";
+//         var login = "login";
+
+
+
+
+
+//     }else{
+//         reglog.textContent = "English";
+//         document.dilForm.action = "/tr";
+//         var welcome = "Hoşgeldiniz, ";
+//         var logout = "Çıkış";
+//         var todos = "Yapılacaklar";
+//         var addTodoPlaceHolder = "Ne Yapmak Istersin ?";
+//         var pickADate = "Tarih Seç";
+//         var writeNote = "Not Yaz";
+//         var addTodo = "Planı Ekle";
+//         var dates = "Tarih";
+//         var todo = "Yapılacak";
+//         var readMore = "Devamını Oku";
+//         var note = "Not";
+//         var markAllAsDone = "Hepsini Yaptım";
+//         var itemsLeft = "Plan Kaldı";
+//         var alreadyDone = "Tamamlananlar";
+//         var removeAll = "Hepsini Sil";
+//         var itemsCompleted = "Plan Tamamlandı.";
+//         var register = "Kayıt Ol";
+//         var login = "Giriş Yap";
+
+
+//     } 
+// });
+
+
+
+
+
+
+
 
 
 

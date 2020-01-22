@@ -13,7 +13,6 @@
 
 
     <!--Custom styles-->
-
 </head>
 
 <body style = " background-color: teal;">
@@ -22,9 +21,17 @@
         <div class = 'container' style = "text-align: center; ">
             <div class="col-md-12 col-xs-12 col-lg-12">
                 <div class = "nav"> 
-                    <h1 class = "logged">Welcome, <em><%=dic.user.name%> <%=dic.user.surname%></em></h1>
+                    <h1 class = "logged"><%=dic.language.welcome%> <em><%=dic.user.name%> <%=dic.user.surname%></em></h1>
 
-                    <p style="display:inline; margin-top:1rem;" class = " pull-right"><form action="/logout" method = "post" style = "display: inline;"><button class = "logout">LOGOUT</button></form action=""></p>
+                    <p style="display:inline; margin-top:1rem;" class = " pull-right"><form action="/logout" method = "post" style = "display: inline;"><button class = "logout"><%=dic.language.logout%></button></form>
+                        <%if(dic.language.language !== "English"){%>
+                        <form id = "dilForm" action="/tr" method = "post"><button class = "dil pull-right" id = "dil" ><%=dic.language.language%></button></form>
+                            <%}else{%>
+                        <form id = "dilForm" action="/en" method = "post"><button class = "dil pull-right" id = "dil" ><%=dic.language.language%></button></form>
+                        <%}%>
+                    
+                    
+                    </p>
                 </div>
             </div>
         </div>
@@ -34,8 +41,14 @@
         <div class = 'container' style = "text-align: center; ">
             <div class="col-md-12 col-xs-12 col-lg-12">
                 <div class = "nav"> 
-                    <h1 class = "reglog reg" id = "id1" style = "display:inline-block;  position: static;">REGISTER</h1>
-                    <h1 class = "reglog log" style = "display:inline-block;   position: static;">LOGIN</h1>
+                    
+                    <h1 class = "reglog reg" id = "id1" style = "display:inline-block;  position: static;"><%=dic.language.register%></h1>
+                    <h1 class = "reglog log" style = "display:inline-block;   position: static;"><%=dic.language.login%></h1>
+                    <%if(dic.language.language !== "English"){%>
+                        <form id = "dilForm" action="/tr" method = "post" style = "display: inline;"><button class = "dil pull-right" id = "dil" ><%=dic.language.language%></button></form>
+                            <%}else{%>
+                        <form id = "dilForm" action="/en" method = "post" style = "display: inline;" ><button class = "dil pull-right" id = "dil" ><%=dic.language.language%></button></form>
+                        <%}%>
                 </div>
             </div>
         </div>
@@ -58,18 +71,27 @@
                     
                     <p style="font-size: 1.5rem;font-weight: bold;" class = " pull-right"><%=dic.date%></p>
             
-                    <h1 style="text-align: center;">Todos</h1>
+                    <h1 style="text-align: center;"><%=dic.language.todos%></h1>
             
-            
+                    
             <form action="/addTodo" method="post">
+                <%if(dic.language.language !== "English"){%>
                 <input type="text" name="todo" class="form-control add-todo" placeholder="Add todo"
                     style="height: 50px; margin-bottom: 10px;" required>
-                <scan>Pick a Date : </scan><input type="date" name="date" class="add-todo"
+                <scan><%=dic.language.pickADate%> : </scan><input type="date" name="date" class="add-todo"
                     style="height: 10%; margin-bottom: 10px;"><br>
-                <scan>Write Note : </scan><input type="text" name="note" class="add-todo"
+                <scan><%=dic.language.writeNote%> : </scan><input type="text" name="note" class="add-todo"
                     style="height: 10%; margin-bottom: 10px;" placeholder="Write Something">
-                <button id="addTodo" type="submit" name="nameAddTodo" class="form-control btn btn-primary">Add
-                    Todo</button>
+                <button id="addTodo" type="submit" name="nameAddTodo" class="form-control btn btn-primary"><%=dic.language.addTodo%></button>
+                <%}else{%>
+                    <input type="text" name="todo" class="form-control add-todo" placeholder="Ne Yapmak İstersin ?"
+                    style="height: 50px; margin-bottom: 10px;" required>
+                <scan><%=dic.language.pickADate%> : </scan><input type="date" name="date" class="add-todo"
+                    style="height: 10%; margin-bottom: 10px;"><br>
+                <scan><%=dic.language.writeNote%> : </scan><input type="text" name="note" class="add-todo"
+                    style="height: 10%; margin-bottom: 10px;" placeholder="Not Yazmak İster misin ?">
+                <button id="addTodo" type="submit" name="nameAddTodo" class="form-control btn btn-primary"><%=dic.language.addTodo%></button>
+                    <%}%>
             </form>
             <hr>
 
@@ -88,10 +110,10 @@
                                 </ul>
                             </form>
                             <% if (dic.todos[i]["date"] !== ""){%>
-                            <label style=""><strong style = "margin-left:1rem;">Dates : </strong style = "margin-left:1rem;"><%=dic.todos[i]["date"]%>
+                            <label style=""><strong style = "margin-left:1rem;"><%=dic.language.dates%> : </strong style = "margin-left:1rem;"><%=dic.todos[i]["date"]%>
                                 </labelstyle="margin-left:2rem;></label>
                             <%}else{%>
-                            <label><strong style = "margin-left:1rem;">Dates : </strong style = "margin-left:1rem;"><img
+                            <label><strong style = "margin-left:1rem;"><%=dic.language.dates%> : </strong style = "margin-left:1rem;"><img
                                     style="width:15%; height:15%;" src="img/infinity.png" alt="---"></label
                                 style="margin-left:1rem;">
                             <%}%>
@@ -99,10 +121,10 @@
                                 </div>
                                 <hr style = "width:20%; background-color: rebeccapurple;">
                                 <div class="row" style = "margin-right:0.5rem;">
-                                        <label name = "todolst" style = "word-wrap: break-word;"><strong style = "margin-left:1rem;">Todo : </strong style = "margin-left:1rem;"><%=dic.todos[i].todo.slice(0,100)%><%if(dic.todos[i].todo.length > 100){%>
+                                        <label name = "todolst" style = "word-wrap: break-word;"><strong style = "margin-left:1rem;"><%=dic.language.todo%> : </strong style = "margin-left:1rem;"><%=dic.todos[i].todo.slice(0,100)%><%if(dic.todos[i].todo.length > 100){%>
                             <form action="/todoDetail" method="post">
                                 <input style="display: inline;" name="todo" value=<%=i%> type="hidden"></input>
-                                <button style="display: inline;" type="submit" class="btn btn-default">...Read More</button>
+                                <button style="display: inline;" type="submit" class="btn btn-default">...<%=dic.language.readMore%></button>
                             </form>
                             <%}%>
                                         </label name = "todolst">
@@ -110,13 +132,13 @@
                             <hr style = "width:20%; background-color: rebeccapurple;">
                             <div class="row" style = "margin-right:0.5rem;">
                                     <label name = "todolst" style = "word-wrap: break-word;">
-                                        <%if(dic.todos[i].note.length > 100){%> <strong style = "margin-left:1rem;">Note : </strong>
+                                        <%if(dic.todos[i].note.length > 100){%> <strong style = "margin-left:1rem;"><%=dic.language.note%> : </strong>
                             <%=dic.todos[i].note.slice(0,100)%>
                             <form action="/todoDetail" method="post">
                                 <input style="display: inline;" name="todo" value=<%=i%> type="hidden"></input>
-                                <button style="display: inline;" type="submit" class="btn btn-default">...Read More</button>
+                                <button style="display: inline;" type="submit" class="btn btn-default">...<%=dic.language.readMore%></button>
                             </form>
-                            <%}else{%> <strong style = "margin-left:1rem;">Note : </strong style = "margin-left:1rem;">
+                            <%}else{%> <strong style = "margin-left:1rem;"><%=dic.language.note%> : </strong style = "margin-left:1rem;">
                             <%=dic.todos[i].note%>
                             <%}%>
                                     </label>
@@ -129,10 +151,10 @@
                     <hr style = "background-color: red;">
                     <%}%>
                             <form action="/markAllDone" method="post">
-                                <button id="checkAll" style="margin-bottom: 10px;" class="btn btn-success">Mark all as done</button>
+                                <button id="checkAll" style="margin-bottom: 10px;" class="btn btn-success"><%=dic.language.markAllAsDone%></button>
                             </form>
                             <div class="todo-footer">
-                                <strong><span class="count-todos"></span></strong> <%=dic.todos.length%> Items Left
+                                <strong><span class="count-todos"></span></strong> <%=dic.todos.length%> <%=dic.language.itemsLeft%>
                             </div>
                     </div>
                 </div>
@@ -145,9 +167,9 @@
         <div class="col-md-12 col-xs-12 col-lg-12" style="margin-bottom: 10%;">
             <div class="todolist">
                 <div style = "text-align: center;">
-                    <h1 style = "font-size : 2rem; display: inline; position : static;">Already Done </h1>
+                    <h1 style = "font-size : 2rem; display: inline; position : static;"><%=dic.language.alreadyDone%></h1>
                     <form style="display: inline;" action="/removeAll" method="post">
-                        <button type="submit"  class="btn btn-danger pull-right" style = "position : static;">Remove All</button>
+                        <button type="submit"  class="btn btn-danger pull-right" style = "position : static;"><%=dic.language.removeAll%></button>
                     </form>
                     
                 </div>
@@ -168,9 +190,9 @@
                             </ul>
                         </form>
                         <% if (dic.allDone[i]["date"] !== ""){%>
-                        <label><strong style = "margin-left:1rem;">Dates : </strong><%=dic.allDone[i]["date"]%></label>
+                        <label><strong style = "margin-left:1rem;"><%=dic.language.dates%> : </strong><%=dic.allDone[i]["date"]%></label>
                         <%}else{%>
-                        <label><strong style="margin-left:1rem;">Dates : </strong style="margin-left:1rem;"><img style="width:15%; height:15%;"
+                        <label><strong style="margin-left:1rem;"><%=dic.language.dates%> : </strong style="margin-left:1rem;"><img style="width:15%; height:15%;"
                                 src="img/infinity.png" alt="---"></label>
                         <%}%>
                             </div>
@@ -184,11 +206,11 @@
                                 
                                 
                                 <div class="row" style = "margin-right:0.5rem;">
-                                        <label name = "todolst" style = "word-wrap: break-word; "><strong style = "margin-left:1rem;">Todo : </strong><%=dic.allDone[i].todo.slice(0,100)%>
+                                        <label name = "todolst" style = "word-wrap: break-word; "><strong style = "margin-left:1rem;"><%=dic.language.todo%> : </strong><%=dic.allDone[i].todo.slice(0,100)%>
                         <%if(dic.allDone[i].todo.length > 100){%>
                         <form  action="/todoDetail" method="post">
                             <input style="display: inline;" name="todo" value=<%=i%> type="hidden">
-                            <button style="display: inline;" type="submit" class="btn btn-default">...Read More</button>
+                            <button style="display: inline;" type="submit" class="btn btn-default">...<%=dic.language.readMore%></button>
                         </form>
                         <%}%>
                                 </label>
@@ -204,14 +226,13 @@
                             
                             <div class="row" style = "margin-right:0.5rem;">
                                     <label name = "todolst" style = "word-wrap: break-word;">
-                                        <%if(dic.allDone[i].note.length > 100){%> <strong style = "margin-left:1rem;">Note : </strong>
+                                        <%if(dic.allDone[i].note.length > 100){%> <strong style = "margin-left:1rem;"><%=dic.language.note%> : </strong>
                         <%=dic.allDone[i].note.slice(0,100)%>
                         <form action="/todoDetail" method="post">
                             <input style="display: inline;" name="todo" value=<%=i%> type="hidden">
-                            <button style="display: inline;" type="submit" class="btn btn-default">...Read
-                                More</button>
+                            <button style="display: inline;" type="submit" class="btn btn-default">...<%=dic.language.readMore%></button>
                         </form>
-                        <%}else{%> <strong style = "margin-left:1rem;">Note : </strong style = "margin-left:1rem;">
+                        <%}else{%> <strong style = "margin-left:1rem;"><%=dic.language.note%> : </strong style = "margin-left:1rem;">
                         <%=dic.allDone[i].note%>
                         <%}%>
                                     </label>
@@ -232,7 +253,7 @@
 
 
                         <div class="todo-footer">
-                            <strong><span class="count-todos"></span></strong> <%=dic.allDone.length%> Items Completed
+                            <strong><span class="count-todos"></span></strong> <%=dic.allDone.length%> <%=dic.language.itemsCompleted%>
 
                         </div>
                 </div>

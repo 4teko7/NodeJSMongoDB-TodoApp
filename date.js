@@ -14,10 +14,10 @@
 // }
 
 
-module.exports = getDate;
+module.exports.getDate = getDate();
 
-
-function getDate(){
+module.exports.tarih = tarih();
+function tarih(){
     let today = new Date();
     let options = {
         weekday:"long",
@@ -25,4 +25,13 @@ function getDate(){
         month:"long"
     };
     return today.toLocaleDateString("tr-TR",options);
+}
+function getDate(){
+    let today = new Date();
+    let options = {
+        weekday:"long",
+        day:"numeric",
+        month:"long"
+    };
+    return today.toLocaleDateString("en-EN",options);
 }
