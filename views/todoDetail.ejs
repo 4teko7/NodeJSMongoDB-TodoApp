@@ -4,21 +4,20 @@
 
 
 
-<div class="container" style = "border-style:double; align-content: center;">
+<div class="container" style = "border-style:double; align-content: center; margin:2rem auto;">
     <div style="text-align: center; margin-top: 2rem;" class = "pull-right">
-        <a href="/"><button class="btn btn-primary"><%=dic.language.gotoMainPage%></button></a>
+        <a href="/dashboard"><button class="btn btn-primary"><%=language.gotoMainPage%></button></a>
     </div>
     <div class="container" style = "margin-top: 2rem; margin-bottom: 10%; align-content: center">
-
-        <div class="row">
+        <br>
             
-                <label style = "margin-left: 30%; font-weight: bold;"><%=dic.language.date%></label>
-                <hr style = "height: 5px;background-color: red; margin-right:2rem">
+            <label style = "margin-left: 30%;font-weight: bold;"><%=language.dates%></label>
+            <hr style = "height: 5px;background-color: red; margin-right:2rem">
 
-        </div>
+
         <div  style = "text-align: center;">
-        <% if (dic.todos[i]["date"] !== ""){%>
-            <label><input  type = "hidden"><%=dic.todos[i]["date"]%></label>
+        <% if (todo["date"] !== ""){%>
+            <label><input  type = "hidden"><%=todo["date"]%></label>
             <%}else{%>
                 
             <label><input type = "hidden"><img style="width:10%; height:10%;" src="img/infinity.png"
@@ -26,26 +25,24 @@
                 
             <%}%>
         </div>
+
             <br>
-            <div class="row">
                 <hr style = "margin-right:2rem">
                 <br><br>
-                    <label style = "margin-left: 30%;font-weight: bold;"><%=dic.language.todos%></label style = "margin-left: 30%;">
+                    <label style = "margin-left: 30%; font-weight: bold;"><%=language.todos%></label>
                     <hr style = "height: 5px;background-color: red;margin-right:2rem">
 
-            </div>
             
-
-            <label style = "word-wrap: break-word;"><%=dic.todos[i].todo%></label>
+                <br>
+            <label style = "word-wrap: break-word;"><%=todo.todo%></label>
             <hr style = "margin-right:2rem">
             <br><br>
-            <div class="row">
-                    <label style = "margin-left: 30%;font-weight: bold;"><%=dic.language.note%></label style = "margin-left: 30%;">
+                    <label style = "margin-left: 30%;font-weight: bold;"><%=language.note%></label>
                     <hr style = "height: 5px;background-color: red; margin-right:2rem">
 
-            </div>
 
-            <label style = "word-wrap: break-word;"><%=dic.todos[i].note%></label>
+
+            <label style = "word-wrap: break-word;"><%=todo.note%></label>
 
     </div>
 </div>

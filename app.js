@@ -1,69 +1,97 @@
+
+
 var todos = [];
 var allDone = [];
 var isLogin = false;
 var user = {};
 var canRegister = true;
-language = {welcome : "Welcome, ",
-                logout : "Logout",
-                todos : "Todos",
-                addTodo : "Add Todo",
-                pickADate : "Pick a Date",
-                writeNote : "Write Note",
-                addTodo : "Add Todo",
-                dates : "Dates",
-                todo : "Todo",
-                readMore : "Read More",
-                note : "Note",
-                markAllAsDone : "Mark All As Done",
-                itemsLeft : "Items Left",
-                alreadyDone : "Already Done",
-                removeAll : "Remove All",
-                itemsCompleted : "Items Completed",
-                register : "Register",
-                login : "Login",
-                gotoMainPage : "Go to Main Page",
-                usernameexist:"Username is already exist",
-                man : "Man",
-                woman : "Woman",
-                firstname : "First Name",
-                lastname : "Last Name",
-                password : "Password",
-                username : "Username",
-                confirmPassword : "Confirm Password",
-                language : "Türkçe"
-    }
+
+
+
 module.export = todos;
 module.export = allDone;
+
+// @@@@@@@@@@@@@@@@ REQUIRING MODULES @@@@@@@@@@@@@@@@@@@@@@@
 const express = require("express");
+const app = express();
+
+const expressLayouts = require('express-ejs-layouts');
+const mongoose = require('mongoose');
+const flash = require('connect-flash');
+const session = require("express-session");
+const passport = require('passport');
+require(__dirname + '/config/passport')(passport);
+const authenticate = require(__dirname + "/config/auth.js").authenticate;
+const notAuthenticate = require(__dirname + "/config/auth.js").notAuthenticate;
+var language = require(__dirname + "/language.js").language;
+const dotenv = require('dotenv');
 const bodyParser = require("body-parser");
 const request = require("request");
-const app = express();
 var mysql = require("mysql");
 const date = require(__dirname + "/date.js");
-var dic = {todos: todos,
-    allDone: allDone,
-    date: date.getDate,
-    isLogin:isLogin,
-    user:user,
-    canRegister: canRegister,
-    language:language
-}
+const bcrypt = require("bcrypt");
+
+// @@@@@@@@@@@@@@@@@@ INITIALIZE MODULES @@@@@@@@@@@@@@@@@@@@@
 
 
 
-
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
+app.use(express.urlencoded({extended : false}));
 app.use(express.static("public"));
-app.set("view engine", "ejs");
+app.use(expressLayouts);
+app.set('view engine','ejs');
+app.use(flash());
 
-var connection = mysql.createConnection({
-    host : 'sql10.freemysqlhosting.net',
-    user : 'sql10320080',
-    password : 'U3IEDy2bfF',
-    database : "sql10320080"
+
+// @@@@@@@@@@@@@@@@@    DB CONFIG - MongoDb Connect @@@@@@@@@@@@@@@@@@@@@@@@@@
+const db = require(__dirname + '/config/keys').MongoURI;
+
+mongoose.connect(db,{ useUnifiedTopology : true,useNewUrlParser: true })
+.then(() => console.log('MongoDb Connected'))
+.catch(err => console.log(err));
+
+
+// @@@@@@@@@@@@@@@@   EXPRESS SESSION   @@@@@@@@@@@@@@@@@@@@@@@@@@
+
+app.use(session({
+    secret : 'secret',
+    resave : true,
+    saveUninitialized : true
+}));
+
+// Passport Middleware
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+
+//@@@@@@@@@@@@   GLOBAL VARIABLES   @@@@@@@@@@@@@
+app.use((req,res,next) => {
+    res.locals.successMessage = req.flash('successMessage');
+    res.locals.errorMessage = req.flash('errorMessage');
+    res.locals.error = req.flash('error');
+    next();
 });
+
+
+// @@@@@@@@@@  IMPORTING ROUTES   @@@@@@@@@@@@@@@
+const routerIndex = require(__dirname + '/routes/index');
+const routerUsers = require(__dirname + '/routes/users');
+
+
+// @@@@@@@@@@@@@@@ DB CONNECTION  @@@@@@@@@@@@@@@@@@
+
+// var connection = mysql.createConnection({
+//     host : 'sql10.freemysqlhosting.net',
+//     user : 'sql10320080',
+//     password : 'U3IEDy2bfF',
+//     database : "sql10320080"
+// });
+
+
+// connection.connect((err)=>{
+//     if(err) console.log(err);
+// });
 
 // var connection = mysql.createConnection({
 //     host : 'localhost',
@@ -73,9 +101,7 @@ var connection = mysql.createConnection({
 // });
 
 
-connection.connect((err)=>{
-    if(err) console.log(err);
-});
+
 
 // app.get("/createdb",(req,res)=>{
 //     let sql = 'CREATE DATABASE tododb';
@@ -100,184 +126,71 @@ connection.connect((err)=>{
 //    @@@@@@@@@@ GET METHODS  @@@@@@@@@@@@@@@
 
 
+app.use('/',routerIndex);
+app.use('/users',routerUsers);
 
-app.get("/", (req, res) => {
-    dic.canRegister = true;
-    
-    res.render("todo", {dic:dic});
-});
-
-
-app.get("/register",(req,res)=>{
-    res.render("register");
-});
 
 //    @@@@@@@@@@ POST METHODS  @@@@@@@@@@@@@@@
 
 
 
-app.post("/addTodo", function (req, res) {
-    
+app.post("/addTodo", authenticate,function (req, res) {
+
     if (req.body.todo == "") {
-        res.redirect("/");
+        res.redirect("/dashboard");
     } else {
-        dic.todos.push({ "date": req.body.date, "todo": req.body.todo, "note": req.body.note });
-        res.redirect("/");
-    }
-});
-
-app.post("/markAllDone", function (req, res) {
-    for (let i = 0; i < dic.todos.length; i++) {
-        dic.allDone.push(dic.todos[i]);
-    }
-    dic.todos.length = 0;
-    res.redirect("/");
-});
-
-app.post("/deleteTodo", function (req, res) {
-    dic.allDone = dic.allDone.filter(item => item !== dic.allDone[req.body.todo]);
-    res.redirect("/");
-});
-
-app.post("/removeAll", function (req, res) {
-    dic.allDone.length = 0;
-    res.redirect("/");
-});
-
-app.post("/todoDetail",function(req,res){
-    res.render("todoDetail",{
-        dic : dic,
-        i:req.body.todo});
-});
-
-app.post("/completeTodo",function(req,res){
-
-    dic.allDone.push(dic.todos[req.body.todo])
-    dic.todos = (dic.todos).filter(item => item !== (dic.todos)[req.body.todo]);
-    res.redirect("/");
-});
-
-
-app.post("/login",(req,res)=>{
-        let username = req.body.username;
-        let password = req.body.password;
-        let query = `SELECT * FROM users where username = '${username}' and password = '${password}'`;
-        connection.query(query,(err,result) => {
-            console.log("ERROR FOUND @@@@@@@@@@@@@@@22" +err);
-
-            if(err != null){
-                res.redirect("/");
-            }else{
-                dic.user = result[0]
-                logged(res);
-            }
-        });
-
-});
-
-function logged(res){
-   
-    dic.isLogin = true;
-
-    let query = `Select todos From users where username = '${dic.user.username}'`;
-    connection.query(query,(err,result)=>{
-        if(err) {
-            console.log("ERROR FOUND !");
-            res.redirect("/");
-        }
-        if(result[0] != undefined){
-            if(result[0].todos != null){
-                var parsed = JSON.parse(result[0].todos);
- 
-                for(var i = 0; i < parsed.length; i++){
-                    dic.todos.push(parsed[i]);
-                }
-
-
-        }
-        }
-    });
-    
-
-    query = `Select alldone from users where username = '${dic.user.username}'`;
-    connection.query(query,(err,result) => {
-        if(err){
-            res.redirect('/');
-        }
-
-        if(result[0] != undefined){
-            if(result[0].alldone != undefined){
-                parsed = JSON.parse(result[0].alldone);
-                for(var i = 0; i < parsed.length; i++){
-                    dic.allDone.push(parsed[i]);
-                }
-            }
-        }
-    });
-
-    res.redirect("/");
+        
+            req.user.todos.push({ "date": req.body.date, "todo": req.body.todo, "note": req.body.note });
+            req.user.save();
             
-}
-app.post("/logout",(req,res)=>{
-    dic.isLogin = false;
+        res.redirect("/dashboard");
     
-    let stringifyTodos = JSON.stringify(dic.todos);
-    let stringifyAllDone = JSON.stringify(dic.allDone);
-    let query = `Update users set todos = '${stringifyTodos}' where username = '${dic.user.username}'`;
-    connection.query(query,(err,result)=>{
-        
-    });
-    query = `update users set allDone = '${stringifyAllDone}' where username = '${dic.user.username}'`;
-    connection.query(query,(err,result)=>{
-
-    });
-    dic.todos.length = 0;
-    dic.allDone.length = 0;
-    res.redirect("/");
-});
-
-app.post("/register",(req,res)=>{
-    console.log(req.body)
-    let firstname = req.body.firstname;
-    let surname = req.body.surname;
-    let username = req.body.username;
-    let password = req.body.password;
-    let gender = "";
-    if(req.body.man){
-        gender = "Man";
-    }else if(req.body.woman){
-        gender = "Woman";
-    }else{
-        gender = "No Gender"
     }
-
-    let queryFirst = `SELECT * FROM users WHERE username = '${username}'`;
-    connection.query(queryFirst,(err,result)=>{
-        if(result[0] != undefined){
-            dic.canRegister = false;
-            dic.isLogin = false;
-            dic.user = {};
-            dic.gender = "";
-            dic.date = "";
-            res.render("register",{dic:dic});
-        }else{
-            dic.canRegister = true;
-            dic.user = {name:firstname,surname:surname,username:username,password:password,date:date.getDate,gender:gender};
-            let query = "INSERT INTO users SET ?";
-            connection.query(query,dic.user,(err,result)=>{
-                if(err) throw err;
-                console.log("User Added.");
-        
-            });
-            logged(res);
-        }
-    });
-
 });
 
-app.post("/en",(req,res)=>{
+app.post("/markAllDone", authenticate,function (req, res) {
+   
 
-    dic.language = {welcome : "Welcome, ",
+    for (let i = 0; i < req.user.todos.length; i++) {
+        
+        req.user.alldone.push(req.user.todos[i]);
+    }
+    req.user.todos = [];
+    req.user.save();
+    res.redirect("/dashboard");
+});
+
+app.post("/deleteTodo", authenticate,function (req, res) {
+    
+    req.user.alldone = req.user.alldone.filter(item => item !== req.user.alldone[req.body.todo]);
+    req.user.save();
+    res.redirect("/dashboard");
+});
+
+app.post("/removeAll", authenticate,function (req, res) {
+    
+    req.user.alldone =  [];
+    req.user.save();
+    res.redirect("/dashboard");
+});
+
+app.post("/todoDetail",authenticate,function(req,res){
+    res.render("todoDetail",{todo : req.user.todos[req.body.todo],language:language});
+});
+
+app.post("/completeTodo",authenticate,function(req,res){
+    
+    req.user.alldone.push(req.user.todos[req.body.todo])
+    req.user.todos = (req.user.todos).filter(item => item !== (req.user.todos)[req.body.todo]);
+    req.user.save();
+    res.redirect("/dashboard");
+});
+
+
+
+app.post("/en",authenticate,(req,res)=>{
+
+    language = {welcome : "Welcome, ",
                 logout : "Logout",
                 todos : "Todos",
                 addTodo : "Add Todo",
@@ -289,7 +202,7 @@ app.post("/en",(req,res)=>{
                 readMore : "Read More",
                 note : "Note",
                 markAllAsDone : "Mark All As Done",
-                itemsLeft : "Items Left",
+                itemsLeft : " Items Left",
                 alreadyDone : "Already Done",
                 removeAll : "Remove All",
                 itemsCompleted : "Items Completed",
@@ -304,16 +217,18 @@ app.post("/en",(req,res)=>{
                 password : "Password",
                 username : "Username",
                 confirmPassword : "Confirm Password",
-                language : "Türkçe"
+                language : "Türkçe",
+                title:"Todo",
+                date : `${date.getDate}`
     }
-    dic.date = date.getDate;
-    res.redirect('/');
+    // dic.date = date.getDate;
+    res.render('todo',{authenticate:authenticate,user:req.user,language:language});
 
 });
 
-app.post("/tr",(req,res)=>{
+app.post("/tr",authenticate,(req,res)=>{
 
-    dic.language = {welcome : "Hoşgeldiniz, ",
+    language = {welcome : "Hoşgeldiniz, ",
                 logout : "Çıkış",
                 todos : "Yapılacaklar",
                 addTodoPlaceHolder : "Ne Yapmak Istersin ?",
@@ -325,7 +240,7 @@ app.post("/tr",(req,res)=>{
                 readMore : "Devamını Oku",
                 note : "Not",
                 markAllAsDone : "Hepsini Yaptım",
-                itemsLeft : "Plan Kaldı",
+                itemsLeft : " Plan Kaldı",
                 alreadyDone : "Tamamlananlar",
                 removeAll : "Hepsini Sil",
                 itemsCompleted : "Plan Tamamlandı.",
@@ -340,13 +255,15 @@ app.post("/tr",(req,res)=>{
                 password : "Şifre",
                 username : "Kullanıcı Adı",
                 confirmPassword : "Şifrenizi Doğrula",
-                language : "English"
+                language : "English",
+                title:"Planlarım",
+                date : `${date.tarih}`
     }
-    dic.date = date.tarih;
-    res.redirect('/');
+    // dic.date = date.tarih;
+    res.render('todo',{authenticate:authenticate,user:req.user,language:language});
 
 });
 
-app.listen(process.env.PORT || 3000, function () {
+app.listen(8000, function () {
     console.log("app started");
 });
