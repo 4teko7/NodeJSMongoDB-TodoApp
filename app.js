@@ -1,16 +1,4 @@
 
-
-var todos = [];
-var allDone = [];
-var isLogin = false;
-var user = {};
-var canRegister = true;
-
-
-
-module.export = todos;
-module.export = allDone;
-
 // @@@@@@@@@@@@@@@@ REQUIRING MODULES @@@@@@@@@@@@@@@@@@@@@@@
 const express = require("express");
 const app = express();
@@ -259,7 +247,6 @@ app.post("/tr",authenticate,(req,res)=>{
                 title:"Planlarım",
                 date : `${date.tarih}`
     }
-    // dic.date = date.tarih;
     res.render('todo',{authenticate:authenticate,user:req.user,language:language});
 
 });
