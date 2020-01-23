@@ -12,7 +12,6 @@ require(__dirname + '/config/passport')(passport);
 const authenticate = require(__dirname + "/config/auth.js").authenticate;
 const notAuthenticate = require(__dirname + "/config/auth.js").notAuthenticate;
 var language = require(__dirname + "/language.js").language;
-const dotenv = require('dotenv');
 const bodyParser = require("body-parser");
 const request = require("request");
 var mysql = require("mysql");
@@ -67,49 +66,7 @@ const routerIndex = require(__dirname + '/routes/index');
 const routerUsers = require(__dirname + '/routes/users');
 
 
-// @@@@@@@@@@@@@@@ DB CONNECTION  @@@@@@@@@@@@@@@@@@
 
-// var connection = mysql.createConnection({
-//     host : 'sql10.freemysqlhosting.net',
-//     user : 'sql10320080',
-//     password : 'U3IEDy2bfF',
-//     database : "sql10320080"
-// });
-
-
-// connection.connect((err)=>{
-//     if(err) console.log(err);
-// });
-
-// var connection = mysql.createConnection({
-//     host : 'localhost',
-//     user : 'root',
-//     password : '',
-//     database : "tododb2"
-// });
-
-
-
-
-// app.get("/createdb",(req,res)=>{
-//     let sql = 'CREATE DATABASE tododb';
-//     connection.query(sql,(err,result)=>{
-//         if(err) throw err;
-//         console.log("DB CREATED.");
-//         res.send("tododb CREATED.");
-//     });
-// });
-
-
-// app.get("/createtable",(req,res)=>{
-//     let sql = 'CREATE TABLE users(id int AUTO_INCREMENT,username VARCHAR(255), password VARCHAR(255),PRIMARY KEY id)'
-//     connection.query(sql,(err,result)=>{
-//         if(err) throw err;
-//         console.log(result);
-//         res.send("USERS TABLE CREATED");
-//     });
-
-// });
 
 //    @@@@@@@@@@ GET METHODS  @@@@@@@@@@@@@@@
 
