@@ -4,7 +4,6 @@
   "description": "Newsletter",
   "main": "app.js",
   "dependencies": {
-    "bcrypt": "^3.0.7",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.4.1",
@@ -18,14 +17,17 @@
     "fontawesome": "^5.6.3",
     "mdbootstrap": "^4.11.0",
     "mongoose": "^5.8.9",
-    "mysql": "^2.17.1",
     "passport": "^0.4.1",
+    "dotenv": "^8.2.0",
     "passport-local": "^1.0.0",
     "request": "^2.88.0"
   },
+  "engines": {
+    "node": "8.10.0",
+    "npm": "3.5.2"
+  },
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -42,3 +44,4 @@
   },
   "homepage": "https://github.com/4teko7/newsletter#readme"
 }
+
