@@ -14,9 +14,7 @@ const notAuthenticate = require(__dirname + "/config/auth.js").notAuthenticate;
 var language = require(__dirname + "/language.js").language;
 const bodyParser = require("body-parser");
 const request = require("request");
-var mysql = require("mysql");
 const date = require(__dirname + "/date.js");
-const bcrypt = require("bcrypt");
 
 // @@@@@@@@@@@@@@@@@@ INITIALIZE MODULES @@@@@@@@@@@@@@@@@@@@@
 
@@ -70,7 +68,9 @@ const routerUsers = require(__dirname + '/routes/users');
 
 //    @@@@@@@@@@ GET METHODS  @@@@@@@@@@@@@@@
 
-
+app.listen(process.env.PORT || 8000, function () {
+    console.log("app started");
+});
 app.use('/',routerIndex);
 app.use('/users',routerUsers);
 
@@ -208,6 +208,3 @@ app.post("/tr",authenticate,(req,res)=>{
 
 });
 
-app.listen(process.env.PORT || 8000, function () {
-    console.log("app started");
-});
