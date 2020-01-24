@@ -10,5 +10,5 @@ module.exports.notAuthenticate = function(req,res,next){
     if(!req.isAuthenticated()){
         return next();
     }
-    res.redirect('/');
+    res.redirect('/dashboard');
 }
