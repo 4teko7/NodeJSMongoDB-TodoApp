@@ -15,6 +15,7 @@ var language = require(__dirname + "/language.js").language;
 const bodyParser = require("body-parser");
 const request = require("request");
 const date = require(__dirname + "/date.js");
+const User = require(__dirname + '/models/User');
 
 // @@@@@@@@@@@@@@@@@@ INITIALIZE MODULES @@@@@@@@@@@@@@@@@@@@@
 
@@ -130,7 +131,29 @@ app.post("/completeTodo",authenticate,function(req,res){
 });
 
 
+app.post("/notcompletetodo",authenticate,function(req,res){
+    req.user.todos.push(req.user.alldone[req.body.todo])
+    req.user.alldone = (req.user.alldone).filter(item => item !== (req.user.alldone)[req.body.todo]);
+    req.user.save();
+    res.redirect("/dashboard");
+});
+app.post("/editTodo",authenticate,function(req,res){
 
+    res.render("editTodo",{todo :  req.user.todos[req.body.todoid],language:language,todoid:req.body.todoid});
+
+});
+
+app.post("/completeEdit",authenticate,function(req,res){
+    req.user.todos = (req.user.todos).filter(item => item !== (req.user.todos)[req.body.todoid]);
+    req.user.todos.push({ "date": (req.body.date == "") ? "" : req.body.date, "todo": req.body.textAreaTodo, "note": req.body.textAreaNote });
+    req.user.save();
+    res.redirect("/dashboard");
+
+   
+    
+
+
+});
 app.post("/en",authenticate,(req,res)=>{
 
     language = {welcome : "Welcome, ",
@@ -162,6 +185,10 @@ app.post("/en",authenticate,(req,res)=>{
                 confirmPassword : "Confirm Password",
                 language : "Türkçe",
                 title:"Todo",
+                complete:"not Complete",
+                delete:"X",
+                edit:"Edit",
+                save:"Save",
                 date : `${date.getDate}`
     }
     // dic.date = date.getDate;
@@ -200,6 +227,10 @@ app.post("/tr",authenticate,(req,res)=>{
                 confirmPassword : "Şifrenizi Doğrula",
                 language : "English",
                 title:"Planlarım",
+                complete:"Tamamlanmadı",
+                delete:"Sil",
+                edit:"Düzenle",
+                save:"Kaydet",
                 date : `${date.tarih}`
     }
     res.render('todo',{authenticate:authenticate,user:req.user,language:language});

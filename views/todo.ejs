@@ -87,9 +87,16 @@
                                 <ul id="done-items" class="list-unstyled">
                                     <li style="display: inline;" name="todo"><input name="todo" type="hidden"
                                             value=<%=i%>></li>
-                                    <button type="submit" class="remove-item btn btn-info btn-xs pull-right" style = "position:absolute;right:3rem;"><img
+                                    <button type="submit" class="remove-item btn btn-primary btn-xs pull-right" style = "position:absolute;right:3rem;"><img
                                             src="img/tic.png" style="height:15px; width:15px; font-weight: 400; "
                                             alt="Completed"></button>
+                                </ul>
+                            </form>
+                            <form action="/editTodo" method="post">
+                                <ul id="done-items" class="list-unstyled">
+                                    <li style="display: inline;" name="todoid"><input name="todoid" type="hidden"
+                                        value=<%=i%>></li>
+                                    <button type="submit" class=" btn btn-info pull-right" style = "position:absolute;right:7rem; font-size:1.5rem;font-weight: 5rem;"><%=language.edit%></button>
                                 </ul>
                             </form>
                             <% if (user.todos[i]["date"] !== ""){%>
@@ -170,7 +177,14 @@
                             <ul id="done-items" class="list-unstyled">
                                 <li style="display: inline;" name="todo"><input name="todo" type="hidden" value=<%=i%>>
                                 </li>
-                                <button type="submit" class="remove-item btn btn-danger btn-xs pull-right" style = "right:3rem; position:absolute; ">X</button>
+                                <button type="submit" class="remove-item btn btn-danger btn-xs pull-right" style = "right:2rem; position:absolute; font-size: 1.3rem;font-weight: 2rem;"><%=language.delete%></button>
+                            </ul>
+                        </form>
+                        <form action="/notcompletetodo" method="post">
+                            <ul id="done-items" class="list-unstyled">
+                                <li style="display: inline;" name="todo"><input name="todo" type="hidden" value=<%=i%>>
+                                </li>
+                                <button type="submit" class="add-item btn btn-success btn-xs pull-right" style = "right:5rem; position:absolute; font-size: 1.3rem; font-weight: 2rem;"><%=language.complete%></button>
                             </ul>
                         </form>
                         <% if (user.alldone[i]["date"] !== ""){%>

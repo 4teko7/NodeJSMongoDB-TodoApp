@@ -26,5 +26,9 @@ module.exports.language = {welcome : "Welcome, ",
                 username : "Username",
                 confirmPassword : "Confirm Password",
                 language : "Türkçe",
+                complete:"not Complete",
+                delete:"X",
+                edit:"Edit",
+                save:"Save",
                 title:"Todo"
     }

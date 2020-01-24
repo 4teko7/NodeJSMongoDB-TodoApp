@@ -1,0 +1,60 @@
+
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link href="css/todos.css" rel="stylesheet" id="bootstrap-css">
+<form action="/completeEdit" method = "post">
+    
+<div class="container" style = "border-style:double; align-content: center; margin:2rem auto;">
+    <div style="text-align: center; margin-top: 2rem;" class = "pull-right">
+        <a href="/dashboard"><button class="btn btn-primary"><%=language.gotoMainPage%></button></a>
+    </div>
+    <div class="container" style = "margin-top: 2rem; margin-bottom: 10%; align-content: center">
+        <br>
+            
+            <label style = "margin-left: 30%;font-weight: bold;"><%=language.dates%></label>
+            <hr style = "height: 5px;background-color: red; margin-right:2rem">
+
+
+        <div  style = "text-align: center;">
+        <% if (todo["date"] !== ""){%>
+            <input  name = "date" type = "date" value = <%=todo["date"]%>>
+            <%}else{%>
+                
+            <input name = "date" type = "date" value = ""><img style="width:10%; height:10%;" src="img/infinity.png"
+                    alt="---">
+                
+            <%}%>
+        </div>
+
+            <br>
+                <hr style = "margin-right:2rem">
+                <br><br>
+                    <label style = "margin-left: 30%; font-weight: bold;"><%=language.todos%></label>
+                    <hr style = "height: 5px;background-color: red;margin-right:2rem">
+
+            
+                <br>
+            <textarea name = "textAreaTodo" style = "word-wrap: break-word;width:90%; height:40%;" rows="4"  placeholder = "Todo"><%=todo.todo%></textarea>
+            <hr style = "margin-right:2rem">
+            <br><br>
+                    <label style = "margin-left: 30%;font-weight: bold;"><%=language.note%></label>
+                    <hr style = "height: 5px;background-color: red; margin-right:2rem">
+
+
+
+            <textarea name = "textAreaNote" style = "word-wrap: break-word; margin:auto auto; width:90%; height:40%;" rows = "4" placeholder = "Note"><%=todo.note%></textarea>
+
+    </div>
+    <div style="text-align: center; margin-bottom:1rem; width: 100%;" class = "pull-right">
+
+
+        <li style="display: inline;" name="todo"><input name="todo" type="hidden"
+            value=<%=todo%>></li>
+            <li style="display: inline;" name="todoid"><input name="todoid" type="hidden"
+                value=<%=todoid%>></li>
+
+                
+        <button type = "submit" class="btn btn-primary" style = "width: 90%;"><%=language.save%></button>
+        </div>
+</div>
+
+</form>
