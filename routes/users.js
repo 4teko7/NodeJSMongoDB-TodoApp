@@ -104,7 +104,7 @@ router.post('/login',(req,res,next)=>{
 // @@@@@@@@@@@@ LOGOUT POST REQUEST  @@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 
-router.get('/logout', authenticate,(req,res)=>{
+router.get('/logout',(req,res)=>{
     req.logOut();
     req.flash("successMessage","You Are Successfully Logged Out");
     res.redirect('/');
