@@ -1,4 +1,4 @@
-# newsletter
+# NodeJSMongoDB-TodoApp
 
  <h3>Todo Application (Nodejs)<h3>
   <hr>
@@ -12,17 +12,17 @@
   <hr>
  <div align="center" style="display:flex;">
  
-  <img height="800" src = "https://github.com/4teko7/newsletter/blob/master/PhotosOfNodejsApp/nodejsAppRegister.png">
+  <img height="800" src = "https://github.com/4teko7/NodeJSMongoDB-TodoApp/blob/master/PhotosOfNodejsApp/nodejsAppRegister.png">
   <hr>
-  <img height="800" src = "https://github.com/4teko7/newsletter/blob/master/PhotosOfNodejsApp/nodejsAppLogin.png">
+  <img height="800" src = "https://github.com/4teko7/NodeJSMongoDB-TodoApp/blob/master/PhotosOfNodejsApp/nodejsAppLogin.png">
   <hr>
-  <img height="800" src = "https://github.com/4teko7/newsletter/blob/master/PhotosOfNodejsApp/Screenshot%20from%202020-06-16%2017-59-32.png">
+  <img height="800" src = "https://github.com/4teko7/NodeJSMongoDB-TodoApp/blob/master/PhotosOfNodejsApp/Screenshot%20from%202020-06-16%2017-59-32.png">
   <hr>
-  <img height="800" src = "https://github.com/4teko7/newsletter/blob/master/PhotosOfNodejsApp/Screenshot%20from%202020-06-16%2017-59-38.png">
+  <img height="800" src = "https://github.com/4teko7/NodeJSMongoDB-TodoApp/blob/master/PhotosOfNodejsApp/Screenshot%20from%202020-06-16%2017-59-38.png">
   <hr>
-  <img height="800" src = "https://github.com/4teko7/newsletter/blob/master/PhotosOfNodejsApp/Screenshot%20from%202020-06-16%2017-59-49.png">
+  <img height="800" src = "https://github.com/4teko7/NodeJSMongoDB-TodoApp/blob/master/PhotosOfNodejsApp/Screenshot%20from%202020-06-16%2017-59-49.png">
   <hr>
-  <img height="800" src = "https://github.com/4teko7/newsletter/blob/master/PhotosOfNodejsApp/Screenshot%20from%202020-06-16%2018-00-04.png">
+  <img height="800" src = "https://github.com/4teko7/NodeJSMongoDB-TodoApp/blob/master/PhotosOfNodejsApp/Screenshot%20from%202020-06-16%2018-00-04.png">
   <hr>
   
 
